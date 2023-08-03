@@ -5,10 +5,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './Elements/Login';
 import Home from './Elements/Home';
 import Signup from './Elements/Signup';
-
+import { ToastProvider } from 'react-toast-notifications';
 function App() {
   return (
     <div className="App">
+      <ToastProvider>
       <BrowserRouter>
       <Navbar/>
         <Routes>
@@ -17,6 +18,7 @@ function App() {
           <Route path='/signup' element={<Signup/>}/>
         </Routes>
       </BrowserRouter>
+      </ToastProvider>
     </div>
   );
 }

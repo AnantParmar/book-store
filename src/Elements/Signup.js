@@ -1,4 +1,4 @@
-import * as React from 'react';
+import react, { useState } from 'react';
 
 import Button from '@mui/material/Button';
 
@@ -12,6 +12,10 @@ import { createTheme } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import theme from '../styles/theme'
+import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
+import { ThemeProvider } from '@mui/material/styles';
 function Copyright(props) {
   return (
     <Typography sx={{marginTop: "20px", position:'absolute', bottom:"20px"}} variant="body2" color="text.secondary" align="center" {...props}>
@@ -47,6 +51,13 @@ const validationSchema = Yup.object({
     .required('Password is required'),
 });
 export default function Signup() {
+  const {addToast} = useToasts();
+  const [credentials, setCredentials] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  });
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -56,13 +67,30 @@ export default function Signup() {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      setTimeout(()=>{
+    onSubmit: async (values) => {
+      // const { error } = await dataPersistenceLayer(value);
+      // setTimeout(()=>{
 
-        navigate('/login')
-      },5000)
+      //   navigate('/login')
+      // },5000)
+      
       console.log("redirect..")
       console.log(values)
+      const payload = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+        roleid: Math.random()*1000
+      }
+      axios.post('',payload )
+      .then((response)=>{
+        addToast('Saved Successfully', { appearance: 'success' });
+        navigate('/login')
+      })
+      .catch((error)=>{
+        addToast(error.message, { appearance: 'error' });
+      })
     },
   });
   // const handleSubmit = (event) => {
@@ -77,6 +105,7 @@ export default function Signup() {
   // };
 
   return (
+    <ThemeProvider theme={theme}>
     <Container sx={{
       marginTop: 10,
       display: 'flex',
@@ -85,9 +114,13 @@ export default function Signup() {
       justifyContent: "center",
       boxShadow: '3',
       width: '75%',
-      height: '500px'
+      height: '500px',
+      position: 'relative'
     }}
     maxWidth="md">
+      <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px'}}>
+            Register Here 
+      </Typography>
       <form onSubmit={formik.handleSubmit} 
       sx={{
       marginTop: 50,
@@ -154,5 +187,6 @@ export default function Signup() {
       </form>
       <Copyright/>
     </Container>
+    </ThemeProvider>
   );
 }

@@ -1,21 +1,15 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Formik, Form, useFormik } from 'formik';
-import { Palette } from '@mui/material';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 function Copyright(props) {
   return (
     <Typography sx={{marginTop: "20px", position:'absolute', bottom:"20px"}} variant="body2" color="text.secondary" align="center" {...props}>
@@ -44,6 +38,7 @@ const validationSchema = Yup.object({
     .required('Password is required'),
 });
 export default function Login() {
+  const {addToast} = useToasts();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -52,8 +47,20 @@ export default function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      navigate('/')
+      console.log("redirect..")
       console.log(values)
+      const payload = {
+        email: values.email,
+        password: values.password,
+      }
+      axios.post('',payload )
+      .then((response)=>{
+        addToast('Saved Successfully', { appearance: 'success' });
+        navigate('/')
+      })
+      .catch((error)=>{
+        addToast(error.message, { appearance: 'error' });
+      })
     },
   });
   const handleSubmit = (event) => {
@@ -74,9 +81,13 @@ export default function Login() {
               justifyContent: "center",
               width: '75%',
               height: '500px',
-              boxShadow: '3'
+              boxShadow: '3',
+              position: 'relative'
             }}
             maxWidth="md">
+          <Typography component="h1" variant="h4" sx={{position: 'absolute', top:'10px'}}>
+            Log In 
+          </Typography>
       <form onSubmit={formik.handleSubmit} 
       sx={{
         marginTop: 50,
