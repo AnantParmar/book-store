@@ -170,14 +170,33 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Typography
+          onClick={()=>{navigate('/')}}
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
+            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer' } }}
           >
             BookStore
           </Typography>
-          <Search>
+          <Typography
+          onClick={()=>{navigate('/about')}}
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer'  } }}
+          >
+            About
+          </Typography>
+          <Typography
+          onClick={()=>{navigate('/contact')}}
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer'  } }}
+          >
+            Contact
+          </Typography>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -185,7 +204,7 @@ export default function Navbar() {
               placeholder="Search Books…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">

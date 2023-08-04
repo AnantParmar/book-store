@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 import TextField from '@mui/material/TextField';
 
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -16,9 +16,11 @@ import theme from '../styles/theme'
 import axios from 'axios';
 import { useToasts } from 'react-toast-notifications';
 import { ThemeProvider } from '@mui/material/styles';
+import { Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 function Copyright(props) {
   return (
-    <Typography sx={{marginTop: "20px", position:'absolute', bottom:"20px"}} variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography sx={{marginTop: "20px", position:'abolute', bottom:"20px"}} variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         BookStore
@@ -81,10 +83,11 @@ export default function Signup() {
         lastName: values.lastName,
         email: values.email,
         password: values.password,
-        roleid: Math.random()*1000
+        roleId: parseInt(Math.random()*1000)
       }
-      axios.post('',payload )
+      axios.post('https://book-e-sell-node-api.vercel.app/api/user',payload )
       .then((response)=>{
+        console.log(response)
         addToast('Saved Successfully', { appearance: 'success' });
         navigate('/login')
       })
@@ -109,84 +112,102 @@ export default function Signup() {
     <Container sx={{
       marginTop: 10,
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: "center",
-      boxShadow: '3',
-      width: '75%',
+      // boxShadow: '3',
+      width: '100%',
       height: '500px',
-      position: 'relative'
+      position: 'relative',
+      padding: '0px'
     }}
-    maxWidth="md">
-      <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px'}}>
-            Register Here 
-      </Typography>
-      <form onSubmit={formik.handleSubmit} 
-      sx={{
-      marginTop: 50,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+    maxWidth="lg">
+      <Box sx={{width: '50%', height: '100%', display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: '#d7d6d6',boxShadow: '3', boxSizing: 'border-box', padding: '10px'}}>
+        <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px', width: '50%', textAlign: 'center'}}>
+              Follow Instructions 
+        </Typography>
+        <Typography component="ul" variant="h6" sx={{marginTop: '100px'}}>
+              <Typography component="li" variant="li" sx={{textAlign: 'start'}}>
+                FirstName and LastName must be greater than 1.  
+              </Typography> 
+              <Typography component="li" variant="li" sx={{textAlign: 'start'}}>
+                Email must be valid.  
+              </Typography> 
+              <Typography component="li" variant="li" sx={{textAlign: 'start'}}>
+                Password length must be greater than 7  
+              </Typography> 
+        </Typography>
+      </Box>
+      <Box sx={{width: '50%', height:'100%', boxSizing: 'border-box', padding: '10px',boxShadow: '3', boxSizing: 'border-box'}}>
+        <Typography component="h1" variant="h4" sx={{position: 'absolute',width: '50%',top: '10px', right: '0', textAlign: 'center',fontFamily:'cursive'}}>
+              Register Here 
+        </Typography>
+        <Box sx={{marginTop: '80px'}}>
+          <form onSubmit={formik.handleSubmit} >
+          <TextField
+            fullWidth
+            sx={{marginTop: "20px"}}
+            id="firstName"
+            name="firstName"
+            label="FirstName*"
+            type="text"
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            helperText={formik.touched.firstName && formik.errors.firstName}
+          />
+          <TextField
+            fullWidth
+            sx={{marginTop: "20px"}}
+            id="lastName"
+            name="lastName"
+            label="LastName*"
+            type="text"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
+          />
+          <TextField
+            fullWidth
+            sx={{marginTop: "20px"}}
+            id="email"
+            name="email"
+            label="Email*"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
+          <TextField
+            fullWidth
+            sx={{marginTop: "20px"}}
+            id="password"
+            name="password"
+            label="Password*"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+          <Button sx={{marginTop: "20px"}} color="secondary" variant="contained" type="submit">
+            Register
+          </Button>
+          </form>
+          <Typography>
+            Already Registered ? <Typography sx={{display: 'inline-block', textDecoration:'underline'}} onClick={()=>{navigate('/login')}}>LogIn</Typography>
+          </Typography>
+        </Box>
+        
+      </Box>
       
-      }}
-      >
-      <TextField
-        fullWidth
-        sx={{marginTop: "20px"}}
-        id="firstName"
-        name="firstName"
-        label="FirstName*"
-        type="text"
-        value={formik.values.firstName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-        helperText={formik.touched.firstName && formik.errors.firstName}
-      />
-      <TextField
-        fullWidth
-        sx={{marginTop: "20px"}}
-        id="lastName"
-        name="lastName"
-        label="LastName*"
-        type="text"
-        value={formik.values.lastName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-        helperText={formik.touched.lastName && formik.errors.lastName}
-      />
-      <TextField
-        fullWidth
-        sx={{marginTop: "20px"}}
-        id="email"
-        name="email"
-        label="Email*"
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.email && Boolean(formik.errors.email)}
-        helperText={formik.touched.email && formik.errors.email}
-      />
-      <TextField
-        fullWidth
-        sx={{marginTop: "20px"}}
-        id="password"
-        name="password"
-        label="Password*"
-        type="password"
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
-      />
-      <Button sx={{marginTop: "20px"}} color="secondary" variant="contained" type="submit">
-        Submit
-      </Button>
-      </form>
-      <Copyright/>
     </Container>
+      <Copyright/>
     </ThemeProvider>
   );
 }

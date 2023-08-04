@@ -53,7 +53,7 @@ export default function Login() {
         email: values.email,
         password: values.password,
       }
-      axios.post('',payload )
+      axios.post('https://book-e-sell-node-api.vercel.app/api/user/login',payload )
       .then((response)=>{
         addToast('Saved Successfully', { appearance: 'success' });
         navigate('/')
@@ -122,7 +122,7 @@ export default function Login() {
           helperText={formik.touched.password && formik.errors.password}
         />
         <Button sx={{marginTop: "20px"}} color="secondary" variant="contained" type="submit">
-          Submit
+          LogIn
         </Button>
       </form>
       <Copyright/>

@@ -6,6 +6,8 @@ import Login from './Elements/Login';
 import Home from './Elements/Home';
 import Signup from './Elements/Signup';
 import { ToastProvider } from 'react-toast-notifications';
+import About from './Elements/About';
+import Contact from './Contact';
 function App() {
   return (
     <div className="App">
@@ -16,6 +18,8 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<Signup/>}/>
+          <Route path='/about' element={<About/>}/>
+          <Route path='/contact' element={<Contact/>}/>
         </Routes>
       </BrowserRouter>
       </ToastProvider>
