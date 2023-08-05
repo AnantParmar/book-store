@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import React,{useContext,useState} from 'react';
+import { styled, alpha,ThemeProvider } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,8 +16,97 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
-
-
+import bookContext from '../Context/bookContext';
+import theme from '../styles/theme';
+import { CssBaseline } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Link } from 'react-router-dom';
+function RoutesButtonInDesktop() {
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  return (
+  <Box sx={{width:"fit-content",height: "fit-content"}}>
+    {matches && (
+      <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+      <Typography
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans' } }}
+      >
+        <Link style={{color:"white",textDecoration: 'none'}} to="/">
+        BookStore
+      </Link>
+      </Typography>
+      <Typography
+      // onClick={()=>{navigate('/about')}}
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans'  } }}
+      >
+       <Link style={{color:"white",textDecoration: 'none'}} to='/about'>
+        About
+      </Link>
+      </Typography>
+      <Typography
+      // onClick={()=>{navigate('/contact')}}
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer', fontFamily: 'Josefin Sans' } }}
+      >
+        <Link style={{color:"white",textDecoration: 'none'}}  to="/contact">
+        Contact
+      </Link>
+      </Typography>
+      </Box>
+    )}
+    {!matches && (
+      <Box id={'xyz'} sx={{display: 'none', position: 'absolute',top: '55px',left: '0px',padding: '15px',boxSizing: 'border-box', alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'column', width:"150px",height: '150px',zIndex: '1',backgroundColor: theme.palette.secondary.main}}>
+      <Typography
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{ display: { xs: 'block', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans' } }}
+      >
+        <Link style={{color:"white",textDecoration: 'none'}} to="/">
+        BookStore
+      </Link>
+      </Typography>
+      <Typography
+      // onClick={()=>{navigate('/about')}}
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{ display: { xs: 'block', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans'  } }}
+      >
+       <Link style={{color:"white",textDecoration: 'none'}} to="/about">
+        About
+      </Link>
+      </Typography>
+      <Typography
+      // onClick={()=>{navigate('/contact')}}
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{ display: { xs: 'block', sm: 'block', marginRight: "10px", cursor: 'pointer', fontFamily: 'Josefin Sans'  } }}
+      >
+        <Link style={{color:"white",textDecoration: 'none'}} to="/contact">
+        Contact
+      </Link>
+      </Typography>
+      </Box>
+    )}
+  </Box>);
+}
+const toggleRouteBtns = ()=> {
+  if(!document.getElementById('xyz')) 
+  return;
+  if(document.getElementById('xyz').style.display === "flex")
+  document.getElementById('xyz').style.display = "none"
+  else
+  document.getElementById('xyz').style.display = "flex"
+}
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -59,9 +148,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const navigate = useNavigate();
+  const {user,setUser} = useContext(bookContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -99,8 +189,12 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={()=>{navigate('/login');handleMenuClose()}}>Login</MenuItem>
-      <MenuItem onClick={()=>{navigate('/signup');handleMenuClose()}}>SignUp</MenuItem>
+      {user?<MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{setUser('');navigate('/login');handleMenuClose()}}>LogOut</MenuItem>:(
+      <>
+        <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/login');handleMenuClose()}}>Login</MenuItem>
+        <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/signup');handleMenuClose()}}>SignUp</MenuItem>
+      </>
+      )}
     </Menu>
   );
 
@@ -127,7 +221,7 @@ export default function Navbar() {
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p style={{fontFamily: 'Josefin Sans'}}>Messages</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -139,7 +233,7 @@ export default function Navbar() {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p style={{fontFamily: 'Josefin Sans'}}>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -151,30 +245,35 @@ export default function Navbar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p style={{fontFamily: 'Josefin Sans'}}>Profile</p>
       </MenuItem>
     </Menu>
   );
 
   return (
+    <ThemeProvider theme={theme}>
+    <CssBaseline/>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color='secondary'>
-        <Toolbar>
+        <Toolbar sx={{position: 'relative'}}>
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            sx={{ mr: 2,cursor: 'pointer' }}
+            onFocus={toggleRouteBtns}
+            onBlur={toggleRouteBtns}
           >
             <MenuIcon />
           </IconButton>
+          {/* <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
           <Typography
           onClick={()=>{navigate('/')}}
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer' } }}
+            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans' } }}
           >
             BookStore
           </Typography>
@@ -183,7 +282,7 @@ export default function Navbar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer'  } }}
+            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans'  } }}
           >
             About
           </Typography>
@@ -192,19 +291,21 @@ export default function Navbar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer'  } }}
+            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer', fontFamily: 'Josefin Sans'  } }}
           >
             Contact
-          </Typography>
-          {/* <Search>
+          </Typography> */}
+          <RoutesButtonInDesktop/>
+          {/* </Box> */}
+          <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search Books…"
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ 'aria-label': 'search' , fontFamily: 'Josefin Sans'}}
             />
-          </Search> */}
+          </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -250,5 +351,6 @@ export default function Navbar() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
+    </ThemeProvider>
   );
 }

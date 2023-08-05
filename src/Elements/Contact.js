@@ -1,6 +1,6 @@
 import React, {useContext,useEffect} from 'react'
 import bookContext from '../Context/bookContext';
-const About = () => {
+const Contact = () => {
     const {user, navigate} = useContext(bookContext);
     useEffect(()=>{
       if(!user) {
@@ -9,9 +9,9 @@ const About = () => {
     })
   return (
     <div>
-      About
+      Contact
     </div>
   )
 }
 
-export default About
+export default Contact

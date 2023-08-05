@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
@@ -9,12 +9,15 @@ import { Formik, Form, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useToasts } from 'react-toast-notifications';
+import { toast } from 'react-toastify';
+import { Box } from '@mui/material';
+import theme from '../styles/theme'
+import bookContext from '../Context/bookContext';
 function Copyright(props) {
   return (
-    <Typography sx={{marginTop: "20px", position:'absolute', bottom:"20px"}} variant="body2" color="text.secondary" align="center" {...props}>
+<Typography sx={{marginTop: "20px", position:'abolute', bottom:"20px", fontFamily: 'Josefin Sans'}} variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         BookStore
       </Link>{' '}
       {new Date().getFullYear()}
@@ -25,7 +28,6 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
 const validationSchema = Yup.object({
 
   email: Yup
@@ -38,7 +40,7 @@ const validationSchema = Yup.object({
     .required('Password is required'),
 });
 export default function Login() {
-  const {addToast} = useToasts();
+  const {setUser } = useContext(bookContext)
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -55,50 +57,67 @@ export default function Login() {
       }
       axios.post('https://book-e-sell-node-api.vercel.app/api/user/login',payload )
       .then((response)=>{
-        addToast('Saved Successfully', { appearance: 'success' });
+        setUser(response.data.result)
+        console.log(response)
+        toast('Logged In')
         navigate('/')
       })
       .catch((error)=>{
-        addToast(error.message, { appearance: 'error' });
+        toast(error.message)
       })
     },
   });
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+
 
   return (
+    <ThemeProvider theme={theme}>
     <Container sx={{
               marginTop: 10,
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: {md: 'row',xs: 'column'},
               alignItems: 'center',
               justifyContent: "center",
-              width: '75%',
-              height: '500px',
-              boxShadow: '3',
+              width: {md: '100%',xs: '100%'},
+              height: {md: '500px',xs: '80vh'},
+              marginTop: {xs: '20px', sm: '50px', md: '80px'},
               position: 'relative'
             }}
-            maxWidth="md">
-          <Typography component="h1" variant="h4" sx={{position: 'absolute', top:'10px'}}>
+            maxWidth="lg">
+      <Box sx={{width: {md: '50%',xs: '100%'}, height: {md: '100%',sm: '30%',xs: '50%'}, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: '#d7d6d6',boxShadow: '3', boxSizing: 'border-box', padding: '10px'}}>
+        <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px', width: {md: '50%',xs: '90%'}, textAlign: 'center', fontFamily: 'Josefin Sans'}}>
+              Welcome Back Buddy ! 
+        </Typography>
+        <Typography component="ul" variant="h6" sx={{marginTop: '100px'}}>
+              <Typography component="li" variant="li" sx={{textAlign: 'start', fontFamily: 'Josefin Sans'}}>
+                LogIn to Explore Most Valuable Site  
+              </Typography> 
+              <Typography component="li" variant="li" sx={{textAlign: 'start', fontFamily: 'Josefin Sans'}}>
+                We Are Happy To See You Again! 
+              </Typography> 
+              <Typography component="li" variant="li" sx={{textAlign: 'start', fontFamily: 'Josefin Sans'}}>
+                "Education Is Like Tigress's Milk. He Who Drinks, Does Not Live Without Roaring"  
+              </Typography> 
+        </Typography>
+        <Button onClick={()=>{navigate('/signup')}} sx={{marginTop: "20px", position:'absolute', bottom: {md: '10px',sm: '70%', xs: '50%'}, left: {md: '25%',xs: '50%'}, transform: "translate(-50%,-50%)", fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
+            Register
+          </Button>
+      </Box>
+      <Box sx={{width:{md: '50%',xs: '100%'}, height:{md: '100%',sm: '70%',xs: '50%'}, boxSizing: 'border-box', padding: '10px',boxShadow: '3', display: 'flex', alignItems: 'center', justifyContent:"center", flexDirection: 'column'}}>
+      <Typography component="h1" variant="h4" sx={{position: 'absolute', top:{md: '10px',sm: '35%',xs: '55%'}, fontFamily: 'Josefin Sans'}}>
             Log In 
           </Typography>
+      <Box sx={{marginTop: {md: '70px',xs: '15%'}, width:'100%', height: {xs: '90%'}, boxSizing: 'border-box',display: 'flex', alignItems: 'center', justifyContent:"flex-start", flexDirection: 'column'}}>
       <form onSubmit={formik.handleSubmit} 
-      sx={{
-        marginTop: 50,
+      style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        width:'100%',
       }}
       >
         <TextField
           fullWidth
-          sx={{marginTop: "20px"}}
+          sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
           id="email"
           name="email"
           label="Email*"
@@ -110,7 +129,7 @@ export default function Login() {
         />
         <TextField
           fullWidth
-          sx={{marginTop: "20px"}}
+          sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
           id="password"
           name="password"
           label="Password*"
@@ -121,76 +140,19 @@ export default function Login() {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <Button sx={{marginTop: "20px"}} color="secondary" variant="contained" type="submit">
+        <Button sx={{position: {xs: 'absolute'},marginTop: "20px",bottom: {xs: '40px'}, fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
           LogIn
         </Button>
-      </form>
-      <Copyright/>
+        </form>
+      </Box>
+      <Typography sx={{fontFamily: 'Josefin Sans'}}>
+            Does not Registered Yet ? <Typography sx={{display: 'inline-block', textDecoration:'underline', fontFamily: 'Josefin Sans',cursor: 'pointer'}} onClick={()=>{navigate('/signup')}}>SignUp</Typography>
+          </Typography>
+      </Box>
     </Container>
-    // <ThemeProvider theme={defaultTheme}>
-    //   <Container component="main" maxWidth="xs">
-    //     <CssBaseline />
-    //     <Box
-    //       sx={{
-    //         marginTop: 8,
-    //         display: 'flex',
-    //         flexDirection: 'column',
-    //         alignItems: 'center',
-    //       }}
-    //     >
+    <Copyright/>
+  </ThemeProvider>
+  );     
 
-    //       <Typography component="h1" variant="h5">
-    //         Log In 
-    //       </Typography>
-    //       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-    //         <TextField
-    //           margin="normal"
-    //           required
-    //           fullWidth
-    //           id="email"
-    //           label="Email Address"
-    //           name="email"
-    //           autoComplete="email"
-    //           autoFocus
-    //         />
-    //         <TextField
-    //           margin="normal"
-    //           required
-    //           fullWidth
-    //           name="password"
-    //           label="Password"
-    //           type="password"
-    //           id="password"
-    //           autoComplete="current-password"
-    //         />
-    //         <FormControlLabel
-    //           control={<Checkbox value="remember" color="primary" />}
-    //           label="Remember me"
-    //         />
-    //         <Button
-    //           type="submit"
-    //           fullWidth
-    //           variant="contained"
-    //           sx={{ mt: 3, mb: 2 }}
-    //         >
-    //           Log In
-    //         </Button>
-    //         <Grid container>
-    //           <Grid item xs>
-    //             <Link href="#" variant="body2">
-    //               Forgot password?
-    //             </Link>
-    //           </Grid>
-    //           <Grid item>
-    //             <Link href="/signup" variant="body2">
-    //               {"Don't have an account? Sign Up"}
-    //             </Link>
-    //           </Grid>
-    //         </Grid>
-    //       </Box>
-    //     </Box>
-    //     {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
-    //   </Container>
-    // </ThemeProvider>
-  );
+   
 }

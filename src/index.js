@@ -9,11 +9,12 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ThemeProvider theme={theme}>
-    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
     <CssBaseline />
     <App />
-  </ThemeProvider>,
+  </ThemeProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

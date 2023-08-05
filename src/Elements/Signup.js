@@ -1,4 +1,4 @@
-import react, { useState } from 'react';
+import react, { useContext} from 'react';
 
 import Button from '@mui/material/Button';
 
@@ -11,18 +11,19 @@ import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
 import theme from '../styles/theme'
 import axios from 'axios';
-import { useToasts } from 'react-toast-notifications';
+import {toast} from 'react-toastify'
 import { ThemeProvider } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import { Link } from 'react-router-dom';
+import bookContext from '../Context/bookContext';
+import { useNavigate } from 'react-router-dom';
 function Copyright(props) {
   return (
-    <Typography sx={{marginTop: "20px", position:'abolute', bottom:"20px"}} variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography sx={{marginTop: "20px", position:'abolute', bottom:"20px",fontFamily: 'Josefin Sans'}} variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="/">
         BookStore
       </Link>{' '}
       {new Date().getFullYear()}
@@ -53,13 +54,6 @@ const validationSchema = Yup.object({
     .required('Password is required'),
 });
 export default function Signup() {
-  const {addToast} = useToasts();
-  const [credentials, setCredentials] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -88,11 +82,11 @@ export default function Signup() {
       axios.post('https://book-e-sell-node-api.vercel.app/api/user',payload )
       .then((response)=>{
         console.log(response)
-        addToast('Saved Successfully', { appearance: 'success' });
+        toast("Registered Successfully")
         navigate('/login')
       })
       .catch((error)=>{
-        addToast(error.message, { appearance: 'error' });
+        toast(error.code)
       })
     },
   });
@@ -109,44 +103,53 @@ export default function Signup() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline/>
     <Container sx={{
-      marginTop: 10,
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: {md: 'row',xs: 'column'},
       alignItems: 'center',
       justifyContent: "center",
       // boxShadow: '3',
       width: '100%',
-      height: '500px',
+      height: {md: '500px',xs: '80vh'},
       position: 'relative',
-      padding: '0px'
+      padding: '0px',
+      marginTop: {xs: '20px', sm: '50px', md: '80px'}
     }}
     maxWidth="lg">
-      <Box sx={{width: '50%', height: '100%', display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: '#d7d6d6',boxShadow: '3', boxSizing: 'border-box', padding: '10px'}}>
-        <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px', width: '50%', textAlign: 'center'}}>
+      <Box sx={{width: {md: '50%',xs: '95%'}, height: {md: '100%',sm: '30%',xs: '40%'}, display: 'flex', alignItems: {md: 'flex-start',xs: 'center'}, justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: '#d7d6d6',boxShadow: '3', boxSizing: 'border-box', padding: '10px'}}>
+        <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px', width: '50%', textAlign: 'center', fontFamily: 'Josefin Sans'}}>
               Follow Instructions 
         </Typography>
-        <Typography component="ul" variant="h6" sx={{marginTop: '100px'}}>
-              <Typography component="li" variant="li" sx={{textAlign: 'start'}}>
+        <Typography component="ul" variant="h6" sx={{marginTop: '80px'}}>
+              <Typography component="li" variant="li" sx={{textAlign: 'start', fontFamily: 'Josefin Sans'}}>
                 FirstName and LastName must be greater than 1.  
               </Typography> 
-              <Typography component="li" variant="li" sx={{textAlign: 'start'}}>
+              <Typography component="li" variant="li" sx={{textAlign: 'start', fontFamily: 'Josefin Sans'}}>
                 Email must be valid.  
               </Typography> 
-              <Typography component="li" variant="li" sx={{textAlign: 'start'}}>
+              <Typography component="li" variant="li" sx={{textAlign: 'start', fontFamily: 'Josefin Sans'}}>
                 Password length must be greater than 7  
               </Typography> 
         </Typography>
+        <Button onClick={()=>{navigate('/login')}} sx={{marginTop: "20px", position:'absolute', bottom: {md: '10px',xs: '60%',sm: '70%'}, left: {md: '25%',xs: '50%'}, transform: "translate(-50%,-50%)", fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
+            LogIn
+          </Button>
       </Box>
-      <Box sx={{width: '50%', height:'100%', boxSizing: 'border-box', padding: '10px',boxShadow: '3', boxSizing: 'border-box'}}>
-        <Typography component="h1" variant="h4" sx={{position: 'absolute',width: '50%',top: '10px', right: '0', textAlign: 'center',fontFamily:'cursive'}}>
+      <Box sx={{width: {md: '50%',xs: '95%'}, height:{md: '100%',sm: '70%',xs: '60%'}, boxSizing: 'border-box', padding: '10px',boxShadow: '3', display: 'flex', alignItems: 'center', justifyContent:"space-between", flexDirection: 'column'}}>
+        <Typography component="h1" variant="h4" sx={{position: 'absolute',top: {md: '10px',xs: '43%', sm: '35%'}, textAlign: 'center', fontFamily: 'Josefin Sans'}}>
               Register Here 
         </Typography>
-        <Box sx={{marginTop: '80px'}}>
-          <form onSubmit={formik.handleSubmit} >
+        <Box sx={{marginTop: {xs:'28px', sm: '80px', md: '40px'},width:'100%',height: '100%' }}>
+          <form onSubmit={formik.handleSubmit} style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        width:'100%'}}>
           <TextField
             fullWidth
-            sx={{marginTop: "20px"}}
+            sx={{marginTop: {xs: '5px', md: '35px'},fontFamily: 'Josefin Sans'}}
             id="firstName"
             name="firstName"
             label="FirstName*"
@@ -159,7 +162,7 @@ export default function Signup() {
           />
           <TextField
             fullWidth
-            sx={{marginTop: "20px"}}
+            sx={{marginTop: {xs: '5px', md: '35px'},fontFamily: 'Josefin Sans'}}
             id="lastName"
             name="lastName"
             label="LastName*"
@@ -172,7 +175,7 @@ export default function Signup() {
           />
           <TextField
             fullWidth
-            sx={{marginTop: "20px"}}
+            sx={{marginTop: {xs: '5px', md: '35px'},fontFamily: 'Josefin Sans'}}
             id="email"
             name="email"
             label="Email*"
@@ -184,7 +187,7 @@ export default function Signup() {
           />
           <TextField
             fullWidth
-            sx={{marginTop: "20px"}}
+            sx={{ marginTop: {xs: '5px', md: '35px'},fontFamily: 'Josefin Sans'}}
             id="password"
             name="password"
             label="Password*"
@@ -195,19 +198,19 @@ export default function Signup() {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
           />
-          <Button sx={{marginTop: "20px"}} color="secondary" variant="contained" type="submit">
+          <Button sx={{marginTop: "20px",position: {xs: 'absolute'},bottom: {xs:'25px',sm : '40px', md: '45px'}, fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit" >
             Register
           </Button>
           </form>
-          <Typography>
-            Already Registered ? <Typography sx={{display: 'inline-block', textDecoration:'underline'}} onClick={()=>{navigate('/login')}}>LogIn</Typography>
-          </Typography>
         </Box>
+          <Typography sx={{fontFamily: 'Josefin Sans'}}>
+            Already Registered ? <Typography sx={{display: 'inline-block', textDecoration:'underline', fontFamily: 'Josefin Sans',cursor: 'pointer'}} onClick={()=>{navigate('/login')}}>LogIn</Typography>
+          </Typography>
         
       </Box>
       
     </Container>
-      <Copyright/>
+    <Copyright/>
     </ThemeProvider>
   );
 }
