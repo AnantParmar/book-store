@@ -100,12 +100,12 @@ function RoutesButtonInDesktop() {
   </Box>);
 }
 const toggleRouteBtns = ()=> {
-  if(!document.getElementById('xyz')) 
+  if(!document.getElementById('routedBtns')) 
   return;
-  if(document.getElementById('xyz').style.display === "flex")
-  document.getElementById('xyz').style.display = "none"
+  if(document.getElementById('routedBtns').style.display === "flex")
+  document.getElementById('routedBtns').style.display = "none"
   else
-  document.getElementById('xyz').style.display = "flex"
+  document.getElementById('routedBtns').style.display = "flex"
 }
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -267,13 +267,13 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Box id='routedBtns' sx={{display: {xs:'none',sm:'flex'},boxShadow: {xs:3,sm: 0},borderRadius: {xs:'5px',sm: 0},width: {xs: '75px',sm:'fit-content'},alignItems: 'center', justifyContent: 'space-between',flexDirection: {xs: 'column',sm: 'row'}, position: {xs: 'absolute', sm: 'static'},top: {xs:'60px'},left: {xs:'15px'},zIndex: {xs:'1'},backgroundColor: theme.palette.secondary.main}}>
           <Typography
           onClick={()=>{navigate('/')}}
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans' } }}
+            sx={{ display: { xs: 'block', sm: 'block'}, "&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}},marginRight: {md:"10px"}, cursor: 'pointer',fontFamily: 'Josefin Sans', width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'}, textAlign: 'center' }}
           >
             BookStore
           </Typography>
@@ -282,7 +282,7 @@ export default function Navbar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans'  } }}
+            sx={{ display: { xs: 'block', sm: 'block'},"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer',fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
           >
             About
           </Typography>
@@ -291,12 +291,12 @@ export default function Navbar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer', fontFamily: 'Josefin Sans'  } }}
+            sx={{ display: { xs: 'block', sm: 'block'},"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
           >
             Contact
-          </Typography> */}
-          <RoutesButtonInDesktop/>
-          {/* </Box> */}
+          </Typography>
+          </Box>
+          {/* <RoutesButtonInDesktop/> */}
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

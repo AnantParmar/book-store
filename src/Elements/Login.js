@@ -84,10 +84,10 @@ export default function Login() {
             }}
             maxWidth="lg">
       <Box sx={{width: {md: '50%',xs: '100%'}, height: {md: '100%',sm: '30%',xs: '50%'}, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'column', backgroundColor: '#d7d6d6',boxShadow: '3', boxSizing: 'border-box', padding: '10px'}}>
-        <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px', width: {md: '50%',xs: '90%'}, textAlign: 'center', fontFamily: 'Josefin Sans'}}>
+        <Typography component="h1" variant="h4" sx={{position: 'absolute',top: '10px', width: {md: '50%',xs: '80%'}, textAlign: 'center', fontFamily: 'Josefin Sans'}}>
               Welcome Back Buddy ! 
         </Typography>
-        <Typography component="ul" variant="h6" sx={{marginTop: '100px'}}>
+        <Typography component="ul" variant="h6" sx={{marginTop: '80px', width:'100%'}}>
               <Typography component="li" variant="li" sx={{textAlign: 'start', fontFamily: 'Josefin Sans'}}>
                 LogIn to Explore Most Valuable Site  
               </Typography> 
