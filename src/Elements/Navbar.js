@@ -21,84 +21,7 @@ import theme from '../styles/theme';
 import { CssBaseline } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link } from 'react-router-dom';
-function RoutesButtonInDesktop() {
-  const matches = useMediaQuery(theme.breakpoints.up('sm'));
-  return (
-  <Box sx={{width:"fit-content",height: "fit-content"}}>
-    {matches && (
-      <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-      <Typography
-        variant="h6"
-        noWrap
-        component="div"
-        sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans' } }}
-      >
-        <Link style={{color:"white",textDecoration: 'none'}} to="/">
-        BookStore
-      </Link>
-      </Typography>
-      <Typography
-      // onClick={()=>{navigate('/about')}}
-        variant="h6"
-        noWrap
-        component="div"
-        sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans'  } }}
-      >
-       <Link style={{color:"white",textDecoration: 'none'}} to='/about'>
-        About
-      </Link>
-      </Typography>
-      <Typography
-      // onClick={()=>{navigate('/contact')}}
-        variant="h6"
-        noWrap
-        component="div"
-        sx={{ display: { xs: 'none', sm: 'block', marginRight: "10px", cursor: 'pointer', fontFamily: 'Josefin Sans' } }}
-      >
-        <Link style={{color:"white",textDecoration: 'none'}}  to="/contact">
-        Contact
-      </Link>
-      </Typography>
-      </Box>
-    )}
-    {!matches && (
-      <Box id={'xyz'} sx={{display: 'none', position: 'absolute',top: '55px',left: '0px',padding: '15px',boxSizing: 'border-box', alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'column', width:"150px",height: '150px',zIndex: '1',backgroundColor: theme.palette.secondary.main}}>
-      <Typography
-        variant="h6"
-        noWrap
-        component="div"
-        sx={{ display: { xs: 'block', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans' } }}
-      >
-        <Link style={{color:"white",textDecoration: 'none'}} to="/">
-        BookStore
-      </Link>
-      </Typography>
-      <Typography
-      // onClick={()=>{navigate('/about')}}
-        variant="h6"
-        noWrap
-        component="div"
-        sx={{ display: { xs: 'block', sm: 'block', marginRight: "10px", cursor: 'pointer',fontFamily: 'Josefin Sans'  } }}
-      >
-       <Link style={{color:"white",textDecoration: 'none'}} to="/about">
-        About
-      </Link>
-      </Typography>
-      <Typography
-      // onClick={()=>{navigate('/contact')}}
-        variant="h6"
-        noWrap
-        component="div"
-        sx={{ display: { xs: 'block', sm: 'block', marginRight: "10px", cursor: 'pointer', fontFamily: 'Josefin Sans'  } }}
-      >
-        <Link style={{color:"white",textDecoration: 'none'}} to="/contact">
-        Contact
-      </Link>
-      </Typography>
-      </Box>
-    )}
-  </Box>);
-}
+
 const toggleRouteBtns = ()=> {
   if(!document.getElementById('routedBtns')) 
   return;
@@ -151,7 +74,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const navigate = useNavigate();
-  const {user,setUser} = useContext(bookContext);
+  const {user,setUser,cart} = useContext(bookContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -190,11 +113,13 @@ export default function Navbar() {
       onClose={handleMenuClose}
     >
       {user?<MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{setUser('');navigate('/login');handleMenuClose()}}>LogOut</MenuItem>:(
-      <>
+      // <>
         <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/login');handleMenuClose()}}>Login</MenuItem>
-        <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/signup');handleMenuClose()}}>SignUp</MenuItem>
-      </>
+        // <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/signup');handleMenuClose()}}>SignUp</MenuItem>
+      // </>
       )}
+      {!user && <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/signup');handleMenuClose()}}>SignUp</MenuItem>
+      }
     </Menu>
   );
 
@@ -215,15 +140,15 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={()=>{user?navigate('/cart'):navigate('/login')}}>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={0} color="error">
+          <Badge badgeContent={cart.length} variant='dot' color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p style={{fontFamily: 'Josefin Sans'}}>Messages</p>
+        <p style={{fontFamily: 'Josefin Sans'}}>Cart</p>
       </MenuItem>
-      <MenuItem>
+      {/* <MenuItem>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -234,7 +159,7 @@ export default function Navbar() {
           </Badge>
         </IconButton>
         <p style={{fontFamily: 'Josefin Sans'}}>Notifications</p>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -253,7 +178,7 @@ export default function Navbar() {
   return (
     <ThemeProvider theme={theme}>
     <CssBaseline/>
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar position="static" color='secondary'>
         <Toolbar sx={{position: 'relative'}}>
           <IconButton
@@ -261,24 +186,25 @@ export default function Navbar() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2,cursor: 'pointer' }}
+            sx={{ mr: 2,cursor: 'pointer' , display: {xs: 'block', sm: 'none'} }}
             onFocus={toggleRouteBtns}
             onBlur={toggleRouteBtns}
+            // onClick={toggleRouteBtns}
           >
             <MenuIcon />
           </IconButton>
-          <Box id='routedBtns' sx={{display: {xs:'none',sm:'flex'},boxShadow: {xs:3,sm: 0},borderRadius: {xs:'5px',sm: 0},width: {xs: '75px',sm:'fit-content'},alignItems: 'center', justifyContent: 'space-between',flexDirection: {xs: 'column',sm: 'row'}, position: {xs: 'absolute', sm: 'static'},top: {xs:'60px'},left: {xs:'15px'},zIndex: {xs:'1'},backgroundColor: theme.palette.secondary.main}}>
+          <Box id='routedBtns' sx={{display: {xs:'none',sm:'flex'},zIndex: 1,boxShadow: {xs:3,sm: 0},borderRadius: {xs:'5px',sm: 0},width: {xs: '75px',sm:'fit-content'},alignItems: 'center', justifyContent: 'space-between',flexDirection: {xs: 'column',sm: 'row'}, position: {xs: 'absolute', sm: 'static'},top: {xs:'60px'},left: {xs:'5px'},zIndex: {xs:'1'},backgroundColor: theme.palette.secondary.main}}>
           <Typography
-          onClick={()=>{navigate('/')}}
+            onMouseDown={()=>{user?navigate('/'):navigate('/login')}}
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'block', sm: 'block'}, "&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}},marginRight: {md:"10px"}, cursor: 'pointer',fontFamily: 'Josefin Sans', width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'}, textAlign: 'center' }}
+            sx={{ display: { xs: 'block', sm: 'block'}, marginRight: {md:"10px"}, cursor: 'pointer',fontFamily: 'Josefin Sans', width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'}, textAlign: 'center' }}
           >
             BookStore
           </Typography>
           <Typography
-          onClick={()=>{navigate('/about')}}
+            onMouseDown={()=>{user?navigate('/about'):navigate('/login')}}
             variant="h6"
             noWrap
             component="div"
@@ -287,7 +213,7 @@ export default function Navbar() {
             About
           </Typography>
           <Typography
-          onClick={()=>{navigate('/contact')}}
+            onMouseDown={()=>{user?navigate('/contact'):navigate('/login')}}
             variant="h6"
             noWrap
             component="div"
@@ -308,12 +234,12 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={0} color="error">
+            <IconButton onClick={()=>{user?navigate('/cart'):navigate('/login')}} size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={cart.length} color="error" showZero>
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            <IconButton
+            {/* <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
@@ -321,7 +247,7 @@ export default function Navbar() {
               <Badge badgeContent={0} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"

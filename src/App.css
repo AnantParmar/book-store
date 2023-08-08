@@ -1,7 +1,12 @@
 .App {
   text-align: center;
 }
-
+#mainDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -36,3 +41,5 @@
     transform: rotate(360deg);
   }
 }
+
+

@@ -13,18 +13,6 @@ import { toast } from 'react-toastify';
 import { Box } from '@mui/material';
 import theme from '../styles/theme'
 import bookContext from '../Context/bookContext';
-function Copyright(props) {
-  return (
-<Typography sx={{marginTop: "20px", position:'abolute', bottom:"20px", fontFamily: 'Josefin Sans'}} variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        BookStore
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -50,7 +38,7 @@ export default function Login() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log("redirect..")
-      console.log(values)
+      // console.log(values)
       const payload = {
         email: values.email,
         password: values.password,
@@ -58,7 +46,7 @@ export default function Login() {
       axios.post('https://book-e-sell-node-api.vercel.app/api/user/login',payload )
       .then((response)=>{
         setUser(response.data.result)
-        console.log(response)
+        // console.log(response)
         toast('Logged In')
         navigate('/')
       })
@@ -146,11 +134,11 @@ export default function Login() {
         </form>
       </Box>
       <Typography sx={{fontFamily: 'Josefin Sans'}}>
-            Does not Registered Yet ? <Typography sx={{display: 'inline-block', textDecoration:'underline', fontFamily: 'Josefin Sans',cursor: 'pointer'}} onClick={()=>{navigate('/signup')}}>SignUp</Typography>
-          </Typography>
+            Does not Registered Yet ? 
+            <Typography variant='span' sx={{display: 'inline-block', textDecoration:'underline', fontFamily: 'Josefin Sans',cursor: 'pointer'}} onClick={()=>{navigate('/signup')}}>SignUp</Typography>
+      </Typography>
       </Box>
     </Container>
-    <Copyright/>
   </ThemeProvider>
   );     
 

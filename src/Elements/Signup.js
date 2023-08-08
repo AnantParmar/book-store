@@ -1,11 +1,6 @@
 import react, { useContext} from 'react';
-
 import Button from '@mui/material/Button';
-
 import TextField from '@mui/material/TextField';
-
-// import Link from '@mui/material/Link';
-
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme } from '@mui/material/styles';
@@ -16,21 +11,9 @@ import axios from 'axios';
 import {toast} from 'react-toastify'
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
-import { Link } from 'react-router-dom';
 import bookContext from '../Context/bookContext';
 import { useNavigate } from 'react-router-dom';
-function Copyright(props) {
-  return (
-    <Typography sx={{marginTop: "20px", position:'abolute', bottom:"20px",fontFamily: 'Josefin Sans'}} variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        BookStore
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -64,12 +47,6 @@ export default function Signup() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // const { error } = await dataPersistenceLayer(value);
-      // setTimeout(()=>{
-
-      //   navigate('/login')
-      // },5000)
-      
       console.log("redirect..")
       console.log(values)
       const payload = {
@@ -149,7 +126,7 @@ export default function Signup() {
         width:'100%'}}>
           <TextField
             fullWidth
-            sx={{marginTop: {xs: '5px', md: '35px'},fontFamily: 'Josefin Sans'}}
+            sx={{marginTop: {xs: '5px', md: '15px'},fontFamily: 'Josefin Sans'}}
             id="firstName"
             name="firstName"
             label="FirstName*"
@@ -162,7 +139,7 @@ export default function Signup() {
           />
           <TextField
             fullWidth
-            sx={{marginTop: {xs: '5px', md: '35px'},fontFamily: 'Josefin Sans'}}
+            sx={{marginTop: {xs: '5px', md: '15px'},fontFamily: 'Josefin Sans'}}
             id="lastName"
             name="lastName"
             label="LastName*"
@@ -175,7 +152,7 @@ export default function Signup() {
           />
           <TextField
             fullWidth
-            sx={{marginTop: {xs: '5px', md: '35px'},fontFamily: 'Josefin Sans'}}
+            sx={{marginTop: {xs: '5px', md: '15px'},fontFamily: 'Josefin Sans'}}
             id="email"
             name="email"
             label="Email*"
@@ -204,13 +181,12 @@ export default function Signup() {
           </form>
         </Box>
           <Typography sx={{fontFamily: 'Josefin Sans'}}>
-            Already Registered ? <Typography sx={{display: 'inline-block', textDecoration:'underline', fontFamily: 'Josefin Sans',cursor: 'pointer'}} onClick={()=>{navigate('/login')}}>LogIn</Typography>
+            Already Registered ? <Typography variant='span' sx={{display: 'inline-block', textDecoration:'underline', fontFamily: 'Josefin Sans',cursor: 'pointer'}} onClick={()=>{navigate('/login')}}>LogIn</Typography>
           </Typography>
         
       </Box>
       
     </Container>
-    <Copyright/>
     </ThemeProvider>
   );
 }
