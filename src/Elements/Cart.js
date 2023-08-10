@@ -11,7 +11,10 @@ const Cart = () => {
     useEffect(()=>{
         if(!user) {
           navigate('/login')
-        } 
+        }
+        else {
+          console.log(cart.length)
+        }
         // eslint-disable-next-line
       },[]) 
   return (

@@ -199,7 +199,7 @@ export default function Navbar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'block', sm: 'block'}, marginRight: {md:"10px"}, cursor: 'pointer',fontFamily: 'Josefin Sans', width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'}, textAlign: 'center' }}
+            sx={{ display: { xs: 'block', sm: 'block'},userSelect:'none',borderTop: `8px solid #b8f754`,borderBottom: `8px solid #4dc481`,borderRadius: '10px', marginRight: {md:"10px"}, cursor: 'pointer',fontFamily: 'Josefin Sans', width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'}, textAlign: 'center' }}
           >
             BookStore
           </Typography>

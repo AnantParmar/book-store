@@ -7,13 +7,13 @@ import bookContext from '../Context/bookContext';
 import axios from 'axios';
 // import {Item}
 const Book = (props) => {
-    const {bookItem} = props
-    const {cart, setCart} = useContext(bookContext)
+    const {bookItem,setQuantity,quantity,user} = props
+    const {cart, setCart,handleClose,handleOpen,setBookId} = useContext(bookContext)
     // const [quantity, ]
     // console.log(book);
     const addToCart = (e)=> {
-        // axios.post('https://book-e-sell-node-api.vercel.app/api/cart')
-
+        setBookId(bookItem.id)
+        handleOpen()
         console.log(e.target)
         setCart([...cart,bookItem])
     }
@@ -34,8 +34,14 @@ const Book = (props) => {
             <Box sx={{width: '100%',height: 'fit-content', backgroundColor: '#7EAA92', padding: '20px'}}>
                 <img style={{width: '80%', aspectRatio: '1/1', borderRadius: '5px'}} src={bookItem.base64image}/>
             </Box>
+            <Typography sx={{fontFamily: 'Josefin Sans'}}>
+                
+                <Typography variant='span' sx={{display: 'inline-block',fontWeight: '900'}} >{bookItem.category}</Typography>
+                <br/>
+                <Typography variant='p' sx={{display: 'inline-block', height: '40px', width: '100%', overflow: 'auto', msOverflowStyle:'none',"&::-webkit-scrollbar":{display: 'none'}}} >{bookItem.description}</Typography>
+            </Typography>
             <Box sx={{backgroundColor: '#9ED2BE',margin: '10px', width: '100%',padding: '10px'}}>
-                <Button variant='text' sx={{fontSize: '1.1rem'}}>Price : {bookItem.price}$</Button>
+            <Typography variant='span'  sx={{fontSize: '1.1rem', marginRight:'10px'}}>Price : {bookItem.price} ₹</Typography>
                 <Button id={`${bookItem.id}-cartButton`} variant='outlined' onClick={addToCart}>Add To Cart</Button>
             </Box>
         </Item>
