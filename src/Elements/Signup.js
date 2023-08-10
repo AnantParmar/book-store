@@ -59,24 +59,15 @@ export default function Signup() {
       axios.post('https://book-e-sell-node-api.vercel.app/api/user',payload )
       .then((response)=>{
         console.log(response)
-        toast("Registered Successfully")
+        toast.success("Registered Successfully")
         navigate('/login')
       })
       .catch((error)=>{
-        toast(error.code)
+        toast.error(error.code)
       })
     },
   });
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     firstName: data.get('firstName'),
-  //     lastName: data.get('lastName'),
-  //     email: data.get('email'),
-  //     password: data.get('password'),
-  //   });
-  // };
+
 
   return (
     <ThemeProvider theme={theme}>

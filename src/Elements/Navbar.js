@@ -21,6 +21,7 @@ import theme from '../styles/theme';
 import { CssBaseline } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const toggleRouteBtns = ()=> {
   if(!document.getElementById('routedBtns')) 
@@ -74,10 +75,14 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const navigate = useNavigate();
-  const {user,setUser,cart} = useContext(bookContext);
+  const {user,setUser,cart,keyword,getBooks,setKeyword,setPageIndex} = useContext(bookContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const searchHandle = (e)=>{
+    setKeyword(e.target.value)
+  }
+  
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -94,7 +99,6 @@ export default function Navbar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -223,14 +227,24 @@ export default function Navbar() {
           </Typography>
           </Box>
           {/* <RoutesButtonInDesktop/> */}
-          <Search>
+          <Search sx={{display: user?'block':'none'}}>
             <SearchIconWrapper>
-              <SearchIcon />
+            <SearchIcon  />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search Books…"
+              value={keyword}
+              onChange={searchHandle}
               inputProps={{ 'aria-label': 'search' , fontFamily: 'Josefin Sans'}}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  // Perform your action here
+                  setPageIndex(1)
+                  getBooks();
+                  console.log("Enter key pressed");
+                }}}
             />
+            
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

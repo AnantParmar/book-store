@@ -28,7 +28,7 @@ const Book = (props) => {
         document.getElementById(`${bookItem.id}-cartButton`).addEventListener('click',addToCart)
       },[])
   return (
-    <Grid item xs={12} sm={4} key={bookItem.id}>
+    <Grid item xs={12} md={4} key={bookItem.id}>
         <Item sx={{display:'flex', alignItems: 'center', justifyContent: 'space-around', flexDirection: 'column', width:'100%', boxShadow: '2'}}>
             <Typography sx={{backgroundColor: '#9ED2BE', marginBottom:'5px', padding: '10px', fontSize:'1.2rem', width:'100%', fontWeight: '700', color: '#557A46', fontVariant:'petite-caps'}}>{bookItem.name}</Typography>
             <Box sx={{width: '100%',height: 'fit-content', backgroundColor: '#7EAA92', padding: '20px'}}>

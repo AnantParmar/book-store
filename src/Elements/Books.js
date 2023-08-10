@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import { Box, Button, Typography,Modal,TextField } from '@mui/material';
 import { Container } from '@mui/material';
 import { toast } from 'react-toastify';
+import Pagination from './Pagination';
 const style = {
   position: 'absolute',
   display: 'flex',
@@ -28,11 +29,14 @@ const Books = () => {
     }
   return (
     <Container sx={{ flexGrow: 1, marginTop: '30px', marginBottom: '50px', marginLeft:'10px', marginRight: '10px', width: '100%'}}>
-        <Grid container spacing={4}>
+        {books.length>0 ?<Grid sx={{width: '100%'}} container spacing={2}>
                 {books.map((item)=>{
                     return <Book bookItem={item} key={item.id} setQuantity={setQuantity} quantity={quantity}/>
                 })}
-        </Grid>
+        </Grid>:
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Search Not Found
+        </Typography>}
         <Modal
         open={open}
         onClose={handleClose}
@@ -44,19 +48,20 @@ const Books = () => {
               Enter Quantity
             </Typography>
             <TextField
-          fullWidth
-          sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
-          id="quantity"
-          name="quantity"
-          label="Quantity*"
-          value={quantity}
-          onChange={handleQuantity}
-        />
+              fullWidth
+              sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
+              id="quantity"
+              name="quantity"
+              label="Quantity*"
+              value={quantity}
+              onChange={handleQuantity}
+            />
           <Button onClick={()=>{makeAddCartReq();toast("Added to Cart")}} sx={{marginTop: "20px",fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
           Add
           </Button>
           </Box>
         </Modal>
+        <Pagination/>
     </Container>
   )
 }

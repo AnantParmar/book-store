@@ -18,7 +18,7 @@ const Home = () => {
     // eslint-disable-next-line
   },[])
   return (
-    <div id='homeMainDiv' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    <div id='homeMainDiv' style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>
       <Books/>
     </div>
   )
