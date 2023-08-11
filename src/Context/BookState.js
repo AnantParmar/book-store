@@ -3,6 +3,8 @@ import BookContext from './bookContext'
 import axios from 'axios';
 const BookState = (props) => {
     const [user,setUser] = useState("");
+    const [admin,setAdmin] = useState("");
+    const [users,setUsers] = useState("");
     const [cartItem,setCartItem] = useState(0);
     const [cart,setCart] = useState([]);
     const [books,setBooks] = useState([]);
@@ -14,6 +16,8 @@ const BookState = (props) => {
     const [keyword,setKeyword] = useState("");
     const [pageIndex,setPageIndex] = useState(1);
     const [pageSize,setPageSize] = useState(5);
+    const [pageIndexUsers,setPageIndexUsers] = useState(1);
+    const [pageSizeUsers,setPageSizeUsers] = useState(20);
     const [totalPages,setTotalPages] = useState(0);
     const [totalBooks,setTotalBooks] = useState(0);
     const [loading,setLoading] = useState(false);
@@ -89,8 +93,22 @@ const BookState = (props) => {
         console.log(error)
       })
     }
+    const getUsers = ()=>{
+      axios.get(`https://book-e-sell-node-api.vercel.app/api/user?pageSize=${pageSizeUsers}&pageIndex=${pageIndexUsers}`)
+      .then((response)=>{
+        console.log(response)
+        setUsers(response.data.result.items)
+        setTotalPages(response.data.result.totalPages)
+      })
+    }
+    const getBookList = ()=>{
+      axios.get('https://book-e-sell-node-api.vercel.app/api/book/all')
+      .then((response)=>{
+        console.log(response)
+      })
+    }
   return (
-    <BookContext.Provider value={{user,books,cartItem,cart,open,quantity,keyword,pageIndex,totalPages,totalBooks,pageSize,setPageSize,setTotalBooks,setTotalPages,setPageIndex,setKeyword,setQuantity, setUser,getBooks,setCartItem,setCart,setOpen,handleOpen,handleClose,makeAddCartReq,setBookId,getCartData,deleteFromCart,placeOrder}}>
+    <BookContext.Provider value={{user,books,cartItem,cart,open,quantity,keyword,pageIndex,totalPages,totalBooks,pageSize,admin,users,pageIndexUsers,pageSizeUsers,setPageSizeUsers,setPageIndexUsers,setUsers,setAdmin,setPageSize,setTotalBooks,setTotalPages,setPageIndex,setKeyword,setQuantity, setUser,getBooks,setCartItem,setCart,setOpen,handleOpen,handleClose,makeAddCartReq,setBookId,getCartData,deleteFromCart,placeOrder,getUsers,getBookList}}>
         {props.children}
     </BookContext.Provider>
   );

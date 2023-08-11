@@ -22,8 +22,8 @@ const Cart = () => {
     <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', flexGrow: 1, marginTop: '30px', marginBottom: '50px', marginLeft:'10px', marginRight: '10px', width: '100%'}}>
         <Typography variant='h2' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px', borderRadius: '10px'}}>
           Cart 
-          {/* <Button variant='outlined' disabled={cart.length===0} onClick={()=>{placeOrder();toast("Order Placed")}} sx={{width: '150px',position: 'absolute', right: '0',color: theme.palette.secondary.dark}} >Remove All</Button> */}
         </Typography>
+          {/* <Button variant='outlined' disabled={cart.length===0} onClick={()=>{placeOrder();toast("Order Placed")}} sx={{width: '150px',position: 'absolute', right: '0',color: theme.palette.secondary.dark}} >Remove All</Button> */}
         <Grid container spacing={2} sx={{textAlign: 'center'}}>
                 {cart.length===0?<Typography variant='h4' sx={{width:'100%', textAlign: 'center',margin: '10px'}}>Nothing To Show</Typography>:cart.map((item)=>{
                     return <CartItem cartItem={item} key={item.id} />

@@ -11,6 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import BookState from './Context/BookState';
 import Footer from './Elements/Footer';
 import Cart from './Elements/Cart';
+import Users from './Elements/Users';
+import BookList from './Elements/BookList';
 function App() {
   document.getElementById('root').style.fontFamily = "Josefin Sans"
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route exact path='/about' element={<About/>}/>
             <Route exact path='/contact' element={<Contact/>}/>
             <Route exact path='/cart' element={<Cart/>}/>
+            <Route exact path='/users' element={<Users/>}/>
+            <Route exact path='/bookList' element={<BookList/>}/>
             
           </Routes>
           <Footer/>

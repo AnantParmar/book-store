@@ -75,7 +75,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const navigate = useNavigate();
-  const {user,setUser,cart,keyword,getBooks,setKeyword,setPageIndex} = useContext(bookContext);
+  const {user,setUser,cart,keyword,getBooks,setKeyword,setPageIndex,admin,setAdmin} = useContext(bookContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -224,6 +224,25 @@ export default function Navbar() {
             sx={{ display: { xs: 'block', sm: 'block'},"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
           >
             Contact
+          </Typography>
+          <Typography
+            onMouseDown={()=>{admin?navigate('/users'):navigate('/login')}}
+            variant="h6"
+            noWrap
+
+            component="div"
+            sx={{ display: admin?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
+          >
+            Users
+          </Typography>
+          <Typography
+            onMouseDown={()=>{admin?navigate('/booklist'):navigate('/login')}}
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: admin?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
+          >
+            Books List
           </Typography>
           </Box>
           {/* <RoutesButtonInDesktop/> */}

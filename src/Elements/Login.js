@@ -28,7 +28,7 @@ const validationSchema = Yup.object({
     .required('Password is required'),
 });
 export default function Login() {
-  const {onLogin,user,setUser } = useContext(bookContext)
+  const {onLogin,user,setUser,setAdmin } = useContext(bookContext)
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -45,8 +45,11 @@ export default function Login() {
       }
       axios.post('https://book-e-sell-node-api.vercel.app/api/user/login',payload )
       .then((response)=>{
-        console.log(response.data.result)
+        console.log(response)
         setUser(response.data.result)
+        if(response.data.result.role==='admin')
+        setAdmin(response.data.result)
+        
         navigate('/')
         toast.success('Logged In')
       })

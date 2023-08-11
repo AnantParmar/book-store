@@ -6,12 +6,14 @@ import axios from 'axios';
 
 const Home = () => {
   const navigate = useNavigate();
-  const {user,getBooks,getCartData} = useContext(bookContext);
+  const {user,getBooks,getCartData,setPageIndex,pageIndex,setPageSize,pageSize} = useContext(bookContext);
   useEffect(()=>{
     if(!user) {
       navigate('/login')
     } 
     else {
+      // setPageIndex(pageIndex=>1)
+      // setPageSize(pageSize=>5)
       getBooks();
       getCartData();
     }
