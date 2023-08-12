@@ -1,27 +1,16 @@
 import React,{useContext,useState} from 'react';
 import { styled, alpha,ThemeProvider } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
+import {AppBar,Box,Toolbar,IconButton,Typography,InputBase,Badge,MenuItem,Menu} from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
 import bookContext from '../Context/bookContext';
 import theme from '../styles/theme';
 import { CssBaseline } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 const toggleRouteBtns = ()=> {
   if(!document.getElementById('routedBtns')) 
@@ -182,7 +171,7 @@ export default function Navbar() {
   return (
     <ThemeProvider theme={theme}>
     <CssBaseline/>
-    <Box sx={{ flexGrow: 1, width: '100%' }}>
+    <Box sx={{ flexGrow: 1, width: '100vw', position: 'sticky',top: 0,zIndex: 2 }}>
       <AppBar position="static" color='secondary'>
         <Toolbar sx={{position: 'relative'}}>
           <IconButton
@@ -258,6 +247,12 @@ export default function Navbar() {
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
                   // Perform your action here
+                  const path = window.location.pathname
+                  console.log(path)
+                  if(window.location.pathname !== '/') {
+                    navigate('/')
+                  }
+
                   setPageIndex(1)
                   getBooks();
                   console.log("Enter key pressed");

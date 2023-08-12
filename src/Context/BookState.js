@@ -19,7 +19,8 @@ const BookState = (props) => {
     const [pageIndexUsers,setPageIndexUsers] = useState(1);
     const [pageSizeUsers,setPageSizeUsers] = useState(20);
     const [totalPages,setTotalPages] = useState(0);
-    const [totalBooks,setTotalBooks] = useState(0);
+    const [totalBookListItems,setTotalBookListItems] = useState(0);
+    const [bookList,setBookList] = useState(0);
     const [loading,setLoading] = useState(false);
     const makeAddCartReq = ()=>{
       const payload = {
@@ -70,7 +71,7 @@ const BookState = (props) => {
         console.log(response)
         setBooks(response.data.result.items)
         setTotalPages(response.data.result.totalPages)
-        setTotalBooks(response.data.result.totalItems)
+
         setLoading(false)
       })
       .catch((error)=>{
@@ -101,14 +102,57 @@ const BookState = (props) => {
         setTotalPages(response.data.result.totalPages)
       })
     }
-    const getBookList = ()=>{
-      axios.get('https://book-e-sell-node-api.vercel.app/api/book/all')
+    const getBookList = (pIndex,pSize)=>{
+      setLoading(true)
+      axios.get(`https://book-e-sell-node-api.vercel.app/api/book?pageSize=${pSize}&pageIndex=${pIndex}`)
+      .then((response)=>{
+        setLoading(false)
+        console.log(response)
+        setBookList(response.data.result.items)
+        setTotalBookListItems(response.data.result.totalPages)
+      })
+    }
+    const updateBook = (bookCredentials)=>{
+      setLoading(true)
+      const payload = {
+        id: bookCredentials.id,
+        name: bookCredentials.bookName,
+        description: bookCredentials.bookDescription,
+        price: bookCredentials.bookPrice,
+        categoryId: bookCredentials.bookCategoryId,
+        base64image: "data:image/jpeg;base64,/9j/"
+      }
+      axios.put(`https://book-e-sell-node-api.vercel.app/api/book`,payload)
       .then((response)=>{
         console.log(response)
+        getBookList(1,10)
+      })
+    }
+    const addBook = (bookCredentials)=>{
+      setLoading(true)
+      const payload = {
+        name: bookCredentials.bookName,
+        description: bookCredentials.bookDescription,
+        price: bookCredentials.bookPrice,
+        categoryId: bookCredentials.bookCategoryId,
+        base64image: "data:image/jpeg;base64,/9j/"
+      }
+      axios.post(`https://book-e-sell-node-api.vercel.app/api/book`,payload)
+      .then((response)=>{
+        console.log(response)
+        getBookList(1,10)
+      })
+    }
+    const deleteBook = (bookId)=>{
+      setLoading(true)
+      axios.delete(`https://book-e-sell-node-api.vercel.app/api/book?id=${bookId}`)
+      .then((response)=>{
+        console.log(response)
+        getBookList(1,10)
       })
     }
   return (
-    <BookContext.Provider value={{user,books,cartItem,cart,open,quantity,keyword,pageIndex,totalPages,totalBooks,pageSize,admin,users,pageIndexUsers,pageSizeUsers,setPageSizeUsers,setPageIndexUsers,setUsers,setAdmin,setPageSize,setTotalBooks,setTotalPages,setPageIndex,setKeyword,setQuantity, setUser,getBooks,setCartItem,setCart,setOpen,handleOpen,handleClose,makeAddCartReq,setBookId,getCartData,deleteFromCart,placeOrder,getUsers,getBookList}}>
+    <BookContext.Provider value={{user,books,cartItem,cart,open,quantity,keyword,pageIndex,totalPages,pageSize,admin,users,pageIndexUsers,pageSizeUsers,bookList,totalBookListItems,loading,setLoading,setTotalBookListItems,setBookList,setPageSizeUsers,setPageIndexUsers,setUsers,setAdmin,setPageSize,setTotalPages,setPageIndex,setKeyword,setQuantity, setUser,getBooks,setCartItem,setCart,setOpen,handleOpen,handleClose,makeAddCartReq,setBookId,getCartData,deleteFromCart,placeOrder,getUsers,getBookList,updateBook,addBook,deleteBook}}>
         {props.children}
     </BookContext.Provider>
   );

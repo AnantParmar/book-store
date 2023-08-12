@@ -7,8 +7,8 @@ import bookContext from '../Context/bookContext';
 import axios from 'axios';
 // import {Item}
 const Book = (props) => {
-    const {bookItem,setQuantity,quantity,user} = props
-    const {cart, setCart,handleClose,handleOpen,setBookId} = useContext(bookContext)
+    const {bookItem} = props
+    const {cart, setCart,handleOpen,setBookId} = useContext(bookContext)
     // const [quantity, ]
     // console.log(book);
     const addToCart = (e)=> {

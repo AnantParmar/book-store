@@ -1,54 +1,205 @@
-import {useContext, useEffect} from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {useContext, useEffect, useState} from 'react';
 import bookContext from '../Context/bookContext';
 import { useNavigate } from 'react-router-dom';
 import BookListItem from './BookListItem';
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
+import theme from '../styles/theme';
+import { Box,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Button,Typography,Select,MenuItem,Modal,TextField } from '@mui/material';
+const style = {
+  position: 'absolute',
+  display: 'flex',
+  alignItem: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 const BookList=()=> {
-    const {getBookList,admin} =useContext(bookContext)
+    const {getBookList,admin,totalBookListItems,loading,bookList,updateBook,addBook} =useContext(bookContext)
+    const  [credentials, setCredentials] = useState({
+      pageIndex : 1,
+      pageSize : 10
+    })
+    const [bookCredentials,setBookCredentials] = useState({
+      bookName : "",
+      bookDescription: "",
+      bookCategoryId: 0,
+      bookPrice: 0,
+      id: 0,
+      base64image: "data:image/jpeg;base64,/9j/"
+    })
+    const [bookOpen,setBookOpen] = useState(false)
+    const handleOpen = () => setBookOpen(true);
+    const handleClose = () => setBookOpen(false);
+    const handlePageIndex =(value)=>{
+      setCredentials({...credentials, pageIndex: credentials.pageIndex+value})
+    }
+    const handleChange = (event)=> {
+
+      setCredentials({...credentials, pageSize: event.target.value,pageIndex: 1})
+    }
+    
+    const editBookRequest = ()=>{
+      console.log(bookCredentials.bookName)
+      console.log(bookCredentials.bookDescription)
+      console.log(bookCredentials.bookCategoryId)
+      console.log(bookCredentials.bookPrice)
+      if(bookCredentials.id==='')
+      addBook(bookCredentials)
+      else
+      updateBook(bookCredentials)
+      setCredentials({...credentials, pageIndex : 1, pageSize : 10})
+      handleClose()
+    }
+    const addBookFun = ()=>{
+      setBookCredentials({...bookCredentials,id:'', bookName: "", bookDescription: "", bookCategoryId: 0, bookPrice: 0})
+      handleOpen()
+    }
     const navigate = useNavigate();
     useEffect(()=>{
         if(admin)
-        getBookList()
+        getBookList(credentials.pageIndex,credentials.pageSize)
         else
         navigate("/login")
-    },[])
+    },[credentials])
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <BookListItem row={row}/>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer sx={{"&::-webkit-scrollbar":{display: 'none'}, width: '99%'}} component={Paper}>
+      <Typography variant='h3' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px', borderRadius: '10px',boxSizing: 'border-box'}}>
+          BookList
+          <Button variant='outlined' onClick={addBookFun}  sx={{width: {xs: 'fit-content',md:'150px'},position: 'absolute', right: '0',color: theme.palette.secondary.dark}} >Add New Book</Button> 
+        </Typography>
+        <Table sx={{ minWidth: 400}  } aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Sr. No</TableCell>
+              <TableCell align="center">Book Name</TableCell>
+              <TableCell align="center">Category</TableCell>
+              <TableCell align="center">Description</TableCell>
+              <TableCell align="center">Price(₹)</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {bookList && bookList.map((bookListItem,index) => (
+              <BookListItem bookListItem={bookListItem} index={index} setBookCredentials={setBookCredentials} bookCredentials={bookCredentials} handleOpen={handleOpen} setCredentials={setCredentials} credentials={credentials}/>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Box sx={{display: loading?'none':'flex', marginTop: '20px',marginBottom: '30px', alignItems: 'center',justifyContent: 'center',width:'100%'}}>
+        <Button onClick={()=>{handlePageIndex(-1)}} value={-1} disabled={credentials.pageIndex===1} sx={{fontFamily: 'Josefin Sans',marginRight: '10px'}}><i className="fa-solid fa-angle-left"></i></Button>
+        <Typography sx={{fontFamily: 'Josefin Sans',marginRight: '10px'}}>
+            Page Size 
+        </Typography>
+        <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={credentials.pageSize}
+            label="PageSize"
+            onChange={handleChange}
+            sx={{fontFamily: 'Josefin Sans',marginRight: '10px'}}
+            
+        >
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+        </Select>
+        <Typography sx={{fontFamily: 'Josefin Sans',marginRight: '10px'}}>
+            {credentials.pageIndex} of {totalBookListItems}
+        </Typography>
+        <Button onClick={()=>{handlePageIndex(1)}} value={1} disabled={credentials.pageIndex===totalBookListItems} sx={{fontFamily: 'Josefin Sans',marginRight: '10px'}}><i className="fa-solid fa-angle-right"></i></Button>
+    </Box>
+    <Modal
+        open={bookOpen}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Name
+            </Typography>
+            <TextField
+              fullWidth
+              sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
+              id="bookName"
+              name="bookName"
+              // label="bookName*"
+              value={bookCredentials.bookName}
+              onChange={(e) =>{
+                setBookCredentials({...bookCredentials, bookName :e.target.value })
+              }}
+            />
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Description
+            </Typography>
+            <TextField
+              fullWidth
+              sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
+              id="bookDescription"
+              name="bookDescription"
+              // label="bookDescription*"
+              value={bookCredentials.bookDescription}
+              onChange={(e) =>{
+                setBookCredentials({...bookCredentials, bookDescription :e.target.value })
+              }}
+            />
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Category ID
+            </Typography>
+            <TextField
+              fullWidth
+              sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
+              id="bookCategoryId"
+              name="bookCategoryId"
+              // label="bookCategoryId*"
+              value={bookCredentials.bookCategoryId}
+              onChange={(e) =>{
+                setBookCredentials({...bookCredentials, bookCategoryId :e.target.value })
+              }}
+            />
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Price
+            </Typography>
+            <TextField
+              fullWidth
+              sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
+              id="bookPrice"
+              name="bookPrice"
+              // label="bookPrice*"
+              value={bookCredentials.bookPrice}
+              onChange={(e) =>{
+                setBookCredentials({...bookCredentials, bookPrice :e.target.value })
+              }}
+            />
+            {/* <Typography id="modal-modal-title" variant="h6" component="h2">
+              Base 64 Image
+            </Typography>
+            <TextField
+              fullWidth
+              sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
+              id="base64"
+              name="base64"
+              value={""}
+              onChange={(e) =>{
+                base64Img.requestBase64(e.target.value, function(err, res, body) {
+  
+                  setBookCredentials({...bookCredentials, base64image :res })
+                });
+              }}
+            /> */}
+          <Button onClick={()=>editBookRequest()} sx={{marginTop: "20px",fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
+            Submit
+          </Button>
+          </Box>
+        </Modal>
+    </>
   );
 }
 
