@@ -17,7 +17,7 @@ const PaginationUsers = ()=> {
     admin && getUsers()
   },[pageIndexUsers,pageSizeUsers])
   return (
-    <Box sx={{display: loading?'none':'flex', marginTop: '20px', alignItems: 'center',justifyContent: 'center',width:'100%'}}>
+    <Box sx={{display: loading?'none':'flex', marginTop: '20px',marginBottom: '30px', alignItems: 'center',justifyContent: 'center',width:'100%'}}>
         <Button onClick={()=>{handlePageIndex(-1)}} value={-1} disabled={pageIndexUsers===1} sx={{fontFamily: 'Josefin Sans',marginRight: '10px'}}><i className="fa-solid fa-angle-left"></i></Button>
         <Typography sx={{fontFamily: 'Josefin Sans',marginRight: '10px'}}>
             Page Size 

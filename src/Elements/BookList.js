@@ -70,21 +70,21 @@ const BookList=()=> {
         navigate("/login")
     },[credentials])
   return (
-    <>
-      <TableContainer sx={{"&::-webkit-scrollbar":{display: 'none'}, width: '99%'}} component={Paper}>
-      <Typography variant='h3' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px', borderRadius: '10px',boxSizing: 'border-box'}}>
+    <Box sx={{minHeight: '100vh', width: '90vw', display: 'flex',alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
+      <Typography variant='h3' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px 0px',padding: '5px', borderRadius: '10px',boxSizing: 'border-box', fontSize: '2.5rem'}}>
           BookList
-          <Button variant='outlined' onClick={addBookFun}  sx={{width: {xs: 'fit-content',md:'150px'},position: 'absolute', right: '0',color: theme.palette.secondary.dark}} >Add New Book</Button> 
-        </Typography>
+        <Button variant='outlined' onClick={addBookFun}  sx={{width: 'fit-content',position: 'absolute', right: '0',color: theme.palette.secondary.dark}}>Add New Book</Button> 
+      </Typography>
+      <TableContainer sx={{"&::-webkit-scrollbar":{display: 'none'}, width: '99%',height: '100%'}} component={Paper}>
         <Table sx={{ minWidth: 400}  } aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Sr. No</TableCell>
-              <TableCell align="center">Book Name</TableCell>
-              <TableCell align="center">Category</TableCell>
-              <TableCell align="center">Description</TableCell>
-              <TableCell align="center">Price(₹)</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align='center' sx={{fontWeight: '900'}}>Sr. No</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Book Name</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Category</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Description</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Price(₹)</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -201,7 +201,7 @@ const BookList=()=> {
           </Button>
           </Box>
         </Modal>
-    </>
+    </Box>
   );
 }
 

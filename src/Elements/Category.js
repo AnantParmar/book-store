@@ -72,19 +72,19 @@ const Category=()=> {
         // eslint-disable-next-line
     },[credentials])
   return (
-    <Box sx={{minHeight: '100vh', width: '100vw'}}>
-      <TableContainer sx={{"&::-webkit-scrollbar":{display: 'none'}, width: '99%',height: '100%'}} component={Paper}>
-      <Typography variant='h3' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px',padding: '5px', borderRadius: '10px',boxSizing: 'border-box', fontSize: '2.5rem'}}>
+    <Box sx={{minHeight: '100vh', width: '90vw', display: 'flex',alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
+      <Typography variant='h3' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px 0px',padding: '5px', borderRadius: '10px',boxSizing: 'border-box', fontSize: '2.5rem'}}>
           Category
-          <Button variant='outlined' onClick={addCategoryFun}  sx={{width: {xs: 'fit-content',md:'150px'},position: 'absolute', right: '0',color: theme.palette.secondary.dark}} >Add New Category</Button> 
+          <Button variant='outlined' onClick={addCategoryFun}  sx={{width: 'fit-content',position: 'absolute', right: '0',color: theme.palette.secondary.dark}} >Add New Category</Button> 
         </Typography>
+      <TableContainer sx={{"&::-webkit-scrollbar":{display: 'none'}, width: '99%',height: '100%'}} component={Paper}>
         <Table sx={{ minWidth: 400}  } aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Sr. No</TableCell>
-              <TableCell align="center">Category Name</TableCell>
-              <TableCell align="center">Category Id</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell align='center' sx={{fontWeight: '900'}}>Sr. No</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Category Name</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Category Id</TableCell>
+              <TableCell align="center" sx={{fontWeight: '900'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

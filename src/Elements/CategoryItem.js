@@ -17,7 +17,7 @@ const CategoryItem = (props) => {
   return (
     <TableRow
         key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } , fontSize: {xs: '2rem'}}}>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" align='center'>
             {index+1}
         </TableCell>
         <TableCell align="center">{categoryItem.name}</TableCell>
