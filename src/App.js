@@ -13,6 +13,7 @@ import Footer from './Elements/Footer';
 import Cart from './Elements/Cart';
 import Users from './Elements/Users';
 import BookList from './Elements/BookList';
+import Category from './Elements/Category';
 function App() {
   document.getElementById('root').style.fontFamily = "Josefin Sans"
   return (
@@ -29,7 +30,7 @@ function App() {
             <Route exact path='/cart' element={<Cart/>}/>
             <Route exact path='/users' element={<Users/>}/>
             <Route exact path='/bookList' element={<BookList/>}/>
-            
+            <Route exact path='/category' element={<Category/>}/>
           </Routes>
           <Footer/>
           <ToastContainer/>

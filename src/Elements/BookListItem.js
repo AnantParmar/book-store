@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import bookContext from '../Context/bookContext';
 import { Button,TableRow,TableCell } from '@mui/material';
+import { toast } from 'react-toastify';
 const BookListItem = (props) => {
     const {deleteBook} = useContext(bookContext)
     const {bookListItem, index,handleOpen, setBookCredentials,bookCredentials,setCredentials,credentials} = props;
@@ -11,6 +12,7 @@ const BookListItem = (props) => {
     const removeBook = ()=>{
       setCredentials({...credentials, pageIndex : 1, pageSize : 10})
       deleteBook(bookListItem.id)
+      toast.success("Book Removed")
     }
   return (
     <TableRow

@@ -105,7 +105,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {user?<MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{setUser('');navigate('/login');handleMenuClose()}}>LogOut</MenuItem>:(
+      {user?<MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{setUser('');setAdmin('');navigate('/login');handleMenuClose()}}>LogOut</MenuItem>:(
       // <>
         <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/login');handleMenuClose()}}>Login</MenuItem>
         // <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/signup');handleMenuClose()}}>SignUp</MenuItem>
@@ -232,6 +232,15 @@ export default function Navbar() {
             sx={{ display: admin?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
           >
             Books List
+          </Typography>
+          <Typography
+            onMouseDown={()=>{admin?navigate('/category'):navigate('/login')}}
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: admin?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
+          >
+            Category
           </Typography>
           </Box>
           {/* <RoutesButtonInDesktop/> */}

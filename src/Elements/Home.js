@@ -8,14 +8,13 @@ const Home = () => {
   const navigate = useNavigate();
   const {user,getBooks,getCartData,setPageIndex,pageIndex,setPageSize,pageSize} = useContext(bookContext);
   useEffect(()=>{
-    if(!user) {
-      navigate('/login')
-    } 
-    else {
-      // setPageIndex(pageIndex=>1)
-      // setPageSize(pageSize=>5)
+    if(user) {
       getBooks();
       getCartData();
+      return;
+    } 
+    else {
+      navigate('/login')
     }
     // eslint-disable-next-line
   },[])

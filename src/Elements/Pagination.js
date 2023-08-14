@@ -2,7 +2,7 @@ import {useContext, useEffect} from 'react';
 import bookContext from '../Context/bookContext';
 import { Box , Typography,Select,MenuItem, Button} from '@mui/material';
 const Pagination = ()=> {
-    const {totalBooks,totalPages,setPageSize,pageSize,setPageIndex,pageIndex,getBooks,loading,getUsers} = useContext(bookContext)
+    const {user,totalBooks,totalPages,setPageSize,pageSize,setPageIndex,pageIndex,getBooks,loading,getUsers} = useContext(bookContext)
 //   console.log(totalBooks)
 //   console.log(totalPages)
 //   console.log(pageSize)
@@ -17,12 +17,8 @@ const Pagination = ()=> {
     setPageIndex(pageIndex => pageIndex + valueL)
   }
   useEffect(()=>{
-    const path = window.location.pathname
-    console.log(path)
-    if(path==='/')
-    getBooks();
-    else if(path==='/users')
-    getUsers()
+    
+    user && getBooks()
 
   },[pageIndex,pageSize])
   return (

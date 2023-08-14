@@ -2,7 +2,7 @@ import {useContext, useEffect} from 'react';
 import bookContext from '../Context/bookContext';
 import { Box , Typography,Select,MenuItem, Button} from '@mui/material';
 const PaginationUsers = ()=> {
-    const {totalPages,setPageSizeUsers,pageSizeUsers,setPageIndexUsers,pageIndexUsers,loading,getUsers} = useContext(bookContext)
+    const {admin,totalPages,setPageSizeUsers,pageSizeUsers,setPageIndexUsers,pageIndexUsers,loading,getUsers} = useContext(bookContext)
 
   const handleChange = (event)=> {
     setPageSizeUsers(event.target.value)
@@ -14,7 +14,7 @@ const PaginationUsers = ()=> {
     setPageIndexUsers(pageIndexUsers => pageIndexUsers + valueL)
   }
   useEffect(()=>{
-    getUsers()
+    admin && getUsers()
   },[pageIndexUsers,pageSizeUsers])
   return (
     <Box sx={{display: loading?'none':'flex', marginTop: '20px', alignItems: 'center',justifyContent: 'center',width:'100%'}}>

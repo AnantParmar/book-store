@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import BookListItem from './BookListItem';
 import theme from '../styles/theme';
 import { Box,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Button,Typography,Select,MenuItem,Modal,TextField } from '@mui/material';
+import { toast } from 'react-toastify';
 const style = {
   position: 'absolute',
   display: 'flex',
@@ -45,15 +46,16 @@ const BookList=()=> {
     }
     
     const editBookRequest = ()=>{
-      console.log(bookCredentials.bookName)
-      console.log(bookCredentials.bookDescription)
-      console.log(bookCredentials.bookCategoryId)
-      console.log(bookCredentials.bookPrice)
-      if(bookCredentials.id==='')
-      addBook(bookCredentials)
-      else
-      updateBook(bookCredentials)
-      setCredentials({...credentials, pageIndex : 1, pageSize : 10})
+
+      if(bookCredentials.id==='') {
+        addBook(bookCredentials)
+        toast.success("Book Added")
+      }
+      else {
+        updateBook(bookCredentials)
+        setCredentials({...credentials, pageIndex : 1, pageSize : 10})
+        toast.success("Book Updated")
+      }
       handleClose()
     }
     const addBookFun = ()=>{

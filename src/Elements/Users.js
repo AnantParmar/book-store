@@ -17,10 +17,12 @@ const Users=()=> {
     const navigate = useNavigate();
     useEffect(()=>{
         if(admin){
-            getUsers();
+          getUsers();
         }
-        else
-        navigate("/login")
+        else {
+          navigate("/login")
+        }
+      // eslint-disable-next-line
     },[])
   return (
     <TableContainer sx={{marginTop: '10px', marginBottom: '30px'}} component={Paper}>

@@ -15,10 +15,7 @@ const CartItem = (props) => {
         deleteFromCart(cartItem.id)
         toast("Removed from Cart")
     }
-    const handleCartItemQuantity = (event)=> {
-        setCartItemQuantity(event.target.value)
-        console.log(cartItemQuantity)
-      }
+    
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
