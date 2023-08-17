@@ -32,7 +32,7 @@ const BookList=()=> {
       bookCategoryId: 0,
       bookPrice: 0,
       id: 0,
-      base64image: "data:image/jpeg;base64,/9j/"
+      base64image: ""
     })
     const [bookOpen,setBookOpen] = useState(false)
     const handleOpen = () => setBookOpen(true);
@@ -59,7 +59,7 @@ const BookList=()=> {
       handleClose()
     }
     const addBookFun = ()=>{
-      setBookCredentials({...bookCredentials,id:'', bookName: "", bookDescription: "", bookCategoryId: 0, bookPrice: 0})
+      setBookCredentials({...bookCredentials,id:'', bookName: "", bookDescription: "", bookCategoryId: 0, bookPrice: 0,base64image: ""})
       handleOpen()
     }
     const navigate = useNavigate();
@@ -180,7 +180,7 @@ const BookList=()=> {
                 setBookCredentials({...bookCredentials, bookPrice :e.target.value })
               }}
             />
-            {/* <Typography id="modal-modal-title" variant="h6" component="h2">
+            <Typography id="modal-modal-title" variant="h6" component="h2">
               Base 64 Image
             </Typography>
             <TextField
@@ -188,14 +188,9 @@ const BookList=()=> {
               sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
               id="base64"
               name="base64"
-              value={""}
-              onChange={(e) =>{
-                base64Img.requestBase64(e.target.value, function(err, res, body) {
-  
-                  setBookCredentials({...bookCredentials, base64image :res })
-                });
-              }}
-            /> */}
+              value={bookCredentials.base64image}
+              onChange={(e) =>{setBookCredentials({...bookCredentials, base64image :e.target.value })}}
+            />
           <Button onClick={()=>editBookRequest()} sx={{marginTop: "20px",fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
             Submit
           </Button>

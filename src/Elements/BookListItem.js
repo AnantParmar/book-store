@@ -6,7 +6,7 @@ const BookListItem = (props) => {
     const {deleteBook} = useContext(bookContext)
     const {bookListItem, index,handleOpen, setBookCredentials,bookCredentials,setCredentials,credentials} = props;
     const editBook = ()=>{
-      setBookCredentials({...bookCredentials,id: bookListItem.id, bookName: bookListItem.name, bookDescription: bookListItem.description, bookCategoryId: bookListItem.categoryId, bookPrice: bookListItem.price})
+      setBookCredentials({...bookCredentials,id: bookListItem.id, bookName: bookListItem.name, bookDescription: bookListItem.description, bookCategoryId: bookListItem.categoryId, bookPrice: bookListItem.price,base64image: bookListItem.base64image})
       handleOpen()
     }
     const removeBook = ()=>{
