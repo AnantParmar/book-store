@@ -186,7 +186,7 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Box id='routedBtns' sx={{display: {xs:'none',sm:'flex'},zIndex: 1,boxShadow: {xs:3,sm: 0},borderRadius: {xs:'5px',sm: 0},width: {xs: '75px',sm:'fit-content'},alignItems: 'center', justifyContent: 'space-between',flexDirection: {xs: 'column',sm: 'row'}, position: {xs: 'absolute', sm: 'static'},top: {xs:'60px'},left: {xs:'5px'},zIndex: {xs:'1'},backgroundColor: theme.palette.secondary.main}}>
+          <Box id='routedBtns' sx={{display: {xs:'none',sm:'flex'},zIndex: 1,boxShadow: {xs:3,sm: 0},borderRadius: {xs:'5px',sm: 0},width: {xs: '75px',sm:'fit-content'},alignItems: 'center', justifyContent: 'space-between',flexDirection: {xs: 'column',sm: 'row'}, position: {xs: 'absolute', sm: 'static'},top: {xs:'60px'},left: {xs:'5px'},backgroundColor: theme.palette.secondary.main}}>
           <Typography
             onMouseDown={()=>{user?navigate('/'):navigate('/login')}}
             variant="h6"
@@ -255,16 +255,12 @@ export default function Navbar() {
               inputProps={{ 'aria-label': 'search' , fontFamily: 'Josefin Sans'}}
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
-                  // Perform your action here
-                  const path = window.location.pathname
-                  console.log(path)
                   if(window.location.pathname !== '/') {
                     navigate('/')
                   }
 
                   setPageIndex(1)
                   getBooks();
-                  console.log("Enter key pressed");
                 }}}
             />
             
@@ -276,15 +272,6 @@ export default function Navbar() {
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            {/* <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={0} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
             <IconButton
               size="large"
               edge="end"

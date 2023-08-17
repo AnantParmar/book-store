@@ -1,11 +1,10 @@
 import React, {useContext} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Formik, Form, useFormik } from 'formik';
+import { ThemeProvider } from '@mui/material/styles';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,7 +13,6 @@ import { Box } from '@mui/material';
 import theme from '../styles/theme'
 import bookContext from '../Context/bookContext';
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const validationSchema = Yup.object({
 
@@ -28,7 +26,7 @@ const validationSchema = Yup.object({
     .required('Password is required'),
 });
 export default function Login() {
-  const {onLogin,user,setUser,setAdmin } = useContext(bookContext)
+  const {setUser,setAdmin } = useContext(bookContext)
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -37,15 +35,13 @@ export default function Login() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log("redirect..")
-      // console.log(values)
+      
       const payload = {
         email: values.email,
         password: values.password,
       }
       axios.post('https://book-e-sell-node-api.vercel.app/api/user/login',payload )
       .then((response)=>{
-        console.log(response)
         setUser(response.data.result)
         if(response.data.result.role==='admin')
         setAdmin(response.data.result)
@@ -63,7 +59,6 @@ export default function Login() {
   return (
     <ThemeProvider theme={theme}>
     <Container sx={{
-              marginTop: 10,
               display: 'flex',
               flexDirection: {md: 'row',xs: 'column'},
               alignItems: 'center',

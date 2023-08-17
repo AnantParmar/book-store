@@ -2,11 +2,7 @@ import {useContext, useEffect} from 'react';
 import bookContext from '../Context/bookContext';
 import { Box , Typography,Select,MenuItem, Button} from '@mui/material';
 const Pagination = ()=> {
-    const {user,totalBooks,totalPages,setPageSize,pageSize,setPageIndex,pageIndex,getBooks,loading,getUsers} = useContext(bookContext)
-//   console.log(totalBooks)
-//   console.log(totalPages)
-//   console.log(pageSize)
-//   console.log(pageIndex)
+    const {user,totalPages,setPageSize,pageSize,setPageIndex,pageIndex,getBooks,loading} = useContext(bookContext)
   const handleChange = (event)=> {
     setPageSize(event.target.value)
     setPageIndex(1)
@@ -19,7 +15,7 @@ const Pagination = ()=> {
   useEffect(()=>{
     
     user && getBooks()
-
+    // eslint-disable-next-line
   },[pageIndex,pageSize])
   return (
     <Box sx={{display: loading?'none':'flex', marginTop: '20px', alignItems: 'center',justifyContent: 'center',width:'100%'}}>

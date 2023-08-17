@@ -3,7 +3,7 @@ import bookContext from '../Context/bookContext';
 import { useNavigate } from 'react-router-dom';
 import BookListItem from './BookListItem';
 import theme from '../styles/theme';
-import { Box,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Button,Typography,Select,MenuItem,Modal,TextField } from '@mui/material';
+import { Box,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Button,Typography,Select,MenuItem,Modal,TextField,Stack } from '@mui/material';
 import { toast } from 'react-toastify';
 const style = {
   position: 'absolute',
@@ -22,6 +22,7 @@ const style = {
 };
 const BookList=()=> {
     const {getBookList,admin,totalBookListItems,loading,bookList,updateBook,addBook} =useContext(bookContext)
+    const [photoUrl,setPhotoUrl] = useState("")
     const  [credentials, setCredentials] = useState({
       pageIndex : 1,
       pageSize : 10
@@ -61,6 +62,13 @@ const BookList=()=> {
     const addBookFun = ()=>{
       setBookCredentials({...bookCredentials,id:'', bookName: "", bookDescription: "", bookCategoryId: 0, bookPrice: 0,base64image: ""})
       handleOpen()
+    }
+    const uploadPhoto = ()=>{
+      const reader = new FileReader()
+      reader.readAsDataURL(photoUrl)
+      reader.onload = ()=>{
+        setBookCredentials({...bookCredentials, base64image: reader.result})
+      }
     }
     const navigate = useNavigate();
     useEffect(()=>{
@@ -183,14 +191,23 @@ const BookList=()=> {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Base 64 Image
             </Typography>
-            <TextField
+            {/* <TextField
               fullWidth
               sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
               id="base64"
               name="base64"
               value={bookCredentials.base64image}
               onChange={(e) =>{setBookCredentials({...bookCredentials, base64image :e.target.value })}}
-            />
+            /> */}
+              {/* <Typography id="modal-modal-title" variant="h6" component="h2">
+                {photoUrl}
+              </Typography> */}
+            <Stack direction="row" alignItems="center" spacing={2}>
+                <input id='photo' accept="image/*" multiple type="file" onChange={(e)=>{setPhotoUrl(e.target.files[0])}}/>
+              <Button disabled={!photoUrl} variant="contained" component="label" onClick={uploadPhoto}>
+                Upload
+              </Button>
+            </Stack>
           <Button onClick={()=>editBookRequest()} sx={{marginTop: "20px",fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
             Submit
           </Button>

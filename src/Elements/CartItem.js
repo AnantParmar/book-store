@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { Box, Button, Typography,TextField } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import bookContext from '../Context/bookContext';
 import { toast } from 'react-toastify';
 const CartItem = (props) => {
     const {cartItem} = props
-    const {cart, setCart,deleteFromCart,quantity,setQuantity} = useContext(bookContext)
-    const [cartItemQuantity,setCartItemQuantity] = useState(cartItem.quantity)
-    // console.log(book);
+    const {cart,deleteFromCart} = useContext(bookContext)
     const removeFromCart = (e)=> {
-        console.log(e.target)
         deleteFromCart(cartItem.id)
         toast("Removed from Cart")
     }
@@ -31,7 +28,7 @@ const CartItem = (props) => {
         <Item sx={{display:'flex', alignItems: 'center', justifyContent: 'space-around', flexDirection: 'column', width:'100%', boxShadow: '2'}}>
             <Typography sx={{backgroundColor: '#9ED2BE', marginBottom:'5px', padding: '10px', fontSize:'1.2rem', width:'100%', fontWeight: '700', color: '#557A46', fontVariant:'petite-caps'}}>{cartItem.book.name}</Typography>
             <Box sx={{width: '100%',height: 'fit-content', backgroundColor: '#7EAA92', padding: '20px'}}>
-                <img style={{width: '80%', aspectRatio: '1/1', borderRadius: '5px'}} src={cartItem.book.base64image}/>
+                <img style={{width: '80%', aspectRatio: '1/1', borderRadius: '5px'}} src={cartItem.book.base64image} alt='Cart Item'/>
             </Box>
             <Typography sx={{fontFamily: 'Josefin Sans'}}>
                 
@@ -43,15 +40,7 @@ const CartItem = (props) => {
                 <Typography variant='span'  sx={{fontSize: '1.1rem', marginRight:'10px'}}>Price : {cartItem.book.price} ₹</Typography>
                 <Typography variant='span'  sx={{fontSize: '1.1rem', marginRight:'10px'}}>Quantity : {cartItem.quantity} </Typography>
                 <br/>
-                {/* <TextField
-                    fullWidth
-                    sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
-                    id="quantity"
-                    name="quantity"
-                    label="Quantity*"
-                    value={cartItemQuantity}
-                    onChange={handleCartItemQuantity}
-                /> */}
+                
                 <Button id={`${cartItem.id}-cartButton`} sx={{marginTop: '10px'}} variant='outlined'>Remove</Button>
             </Box>
         </Item>

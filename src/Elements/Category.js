@@ -42,8 +42,6 @@ const Category=()=> {
     }
     
     const categoryRequest = ()=>{
-      console.log(categoryCredentials.categoryName)
-      console.log(categoryCredentials.id)
       if(categoryCredentials.id===0) {
         addCategory(categoryCredentials)
         toast.success('Added Category')
@@ -56,17 +54,15 @@ const Category=()=> {
       handleClose()
     }
     const addCategoryFun = ()=>{
-      setCategoryCredentials({...categoryCredentials,id:'', categoryName: "", id: 0})
+      setCategoryCredentials({...categoryCredentials, categoryName: "", id: 0})
       handleOpen()
     }
     const navigate = useNavigate();
     useEffect(()=>{
         if(admin) {
-            console.log("admin yes")
             getCategory(credentials.pageIndex,credentials.pageSize)
         }
         else {
-            console.log("admin No")
             navigate("/login")
         }
         // eslint-disable-next-line
@@ -137,19 +133,7 @@ const Category=()=> {
                 setCategoryCredentials({...categoryCredentials, categoryName :e.target.value })
               }}
             />
-            {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-              Category Id
-            </Typography>
-            <TextField
-              fullWidth
-              sx={{marginTop: "20px", fontFamily: 'Josefin Sans'}}
-              id="categoryId"
-              name="categoryId"
-              value={categoryCredentials.id}
-              onChange={(e) =>{
-                setCategoryCredentials({...categoryCredentials, id :e.target.value })
-              }}
-            /> */}
+          
           <Button onClick={()=>categoryRequest()} sx={{marginTop: "20px",fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit">
             Submit
           </Button>

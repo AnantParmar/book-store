@@ -1,9 +1,7 @@
-import react, { useContext} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme } from '@mui/material/styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import theme from '../styles/theme'
@@ -11,13 +9,10 @@ import axios from 'axios';
 import {toast} from 'react-toastify'
 import { ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
-import bookContext from '../Context/bookContext';
 import { useNavigate } from 'react-router-dom';
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
 const validationSchema = Yup.object({
   firstName: Yup
     .string('Enter your First Name')

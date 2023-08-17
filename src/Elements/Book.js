@@ -4,17 +4,13 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Box, Button, Typography } from '@mui/material';
 import bookContext from '../Context/bookContext';
-import axios from 'axios';
-// import {Item}
 const Book = (props) => {
     const {bookItem} = props
     const {cart, setCart,handleOpen,setBookId} = useContext(bookContext)
-    // const [quantity, ]
-    // console.log(book);
+    
     const addToCart = (e)=> {
         setBookId(bookItem.id)
         handleOpen()
-        console.log(e.target)
         setCart([...cart,bookItem])
     }
     const Item = styled(Paper)(({ theme }) => ({

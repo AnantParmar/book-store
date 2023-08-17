@@ -9,7 +9,7 @@ const About = () => {
     })
   return (
     <div>
-      About
+      This is Anant Parmar's Summer Internship Project in Tatva Soft.
     </div>
   )
 }

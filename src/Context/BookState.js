@@ -142,7 +142,7 @@ const BookState = (props) => {
         description: bookCredentials.bookDescription,
         price: bookCredentials.bookPrice,
         categoryId: bookCredentials.bookCategoryId,
-        base64image: "data:image/jpeg;base64,/9j/"
+        base64image: bookCredentials.base64image
       }
       axios.post(`https://book-e-sell-node-api.vercel.app/api/book`,payload)
       .then((response)=>{
