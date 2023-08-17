@@ -79,7 +79,7 @@ const BookList=()=> {
     },[credentials])
   return (
     <Box sx={{minHeight: '100vh', width: '90vw', display: 'flex',alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
-      <Typography variant='h3' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px 0px',padding: '5px', borderRadius: '10px',boxSizing: 'border-box', fontSize: '2.5rem'}}>
+      <Typography variant='h3' sx={{display: loading?'none':'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px 0px',padding: '5px', borderRadius: '10px',boxSizing: 'border-box', fontSize: '2.5rem'}}>
           BookList
         <Button variant='outlined' onClick={addBookFun}  sx={{width: 'fit-content',position: 'absolute', right: '0',color: theme.palette.secondary.dark}}>Add New Book</Button> 
       </Typography>

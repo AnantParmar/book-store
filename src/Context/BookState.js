@@ -36,21 +36,19 @@ const BookState = (props) => {
       }
       axios.post('https://book-e-sell-node-api.vercel.app/api/cart',payload)
       .then((response)=>{
-        // console.log(response)
         getCartData()
       })
       .catch((error)=>{
-        console.log(error)
       })
       setQuantity(0)
       setBookId(0)
       handleClose()
     }
     const getCartData = ()=>{
+      
       axios.get(`https://book-e-sell-node-api.vercel.app/api/cart?userId=${user.id}` )
       .then((response)=>{
 
-        // console.log(response) 
         setCart(response.data.result)
         return response.code
       })
@@ -61,50 +59,42 @@ const BookState = (props) => {
     const deleteFromCart = (cartId)=>{
       axios.delete(`https://book-e-sell-node-api.vercel.app/api/cart?id=${cartId}` )
       .then((response)=>{
-        // console.log(response)
         getCartData()
       })
       .catch((error)=>{
-        console.log(error)
       })
     }
     const getBooks = ()=>{
-      console.log('kjdhflj')
       setLoading(true)
       const url = keyword?`https://book-e-sell-node-api.vercel.app/api/book?pageSize=${pageSize}&pageIndex=${pageIndex}&keyword=${keyword}`:`https://book-e-sell-node-api.vercel.app/api/book?pageSize=${pageSize}&pageIndex=${pageIndex}`
       axios.get(url)
       .then((response)=>{
-        // console.log(response.data.result)
-        console.log(response)
         setBooks(response.data.result.items)
         setTotalPages(response.data.result.totalPages)
 
         setLoading(false)
       })
       .catch((error)=>{
-        console.log(error)
       })
     }
     const placeOrder = ()=>{
       const cartItems = cart.map(item => item.id)
-      console.log(cartItems)
       const payload = {
         userId: user.id,
         cartIds: cartItems
       }
       axios.post(`https://book-e-sell-node-api.vercel.app/api/order`, payload )
       .then((response)=>{
-        console.log(response);
         getCartData()
       })
       .catch((error)=>{
-        console.log(error)
       })
     }
     const getUsers = ()=>{
+      setLoading(true)
       axios.get(`https://book-e-sell-node-api.vercel.app/api/user?pageSize=${pageSizeUsers}&pageIndex=${pageIndexUsers}`)
       .then((response)=>{
-        console.log(response)
+        setLoading(false)
         setUsers(response.data.result.items)
         setTotalPages(response.data.result.totalPages)
       })
@@ -114,7 +104,6 @@ const BookState = (props) => {
       axios.get(`https://book-e-sell-node-api.vercel.app/api/book?pageSize=${pSize}&pageIndex=${pIndex}`)
       .then((response)=>{
         setLoading(false)
-        console.log(response)
         setBookList(response.data.result.items)
         setTotalBookListItems(response.data.result.totalPages)
       })
@@ -131,7 +120,6 @@ const BookState = (props) => {
       }
       axios.put(`https://book-e-sell-node-api.vercel.app/api/book`,payload)
       .then((response)=>{
-        console.log(response)
         getBookList(1,10)
       })
     }
@@ -146,7 +134,6 @@ const BookState = (props) => {
       }
       axios.post(`https://book-e-sell-node-api.vercel.app/api/book`,payload)
       .then((response)=>{
-        console.log(response)
         getBookList(1,10)
       })
     }
@@ -154,18 +141,14 @@ const BookState = (props) => {
       setLoading(true)
       axios.delete(`https://book-e-sell-node-api.vercel.app/api/book?id=${bookId}`)
       .then((response)=>{
-        console.log(response)
         getBookList(1,10)
       })
     }
     const getCategory = (pIndex,pSize)=>{
-      console.log(pIndex)
-      console.log(pSize)
       setLoading(true)
       axios.get(`https://book-e-sell-node-api.vercel.app/api/category?pageSize=${pSize}&pageIndex=${pIndex}`)
       .then((response)=>{
         setLoading(false)
-        console.log(response)
         setCategory(response.data.result.items)
         setTotalCategory(response.data.result.totalPages)
       })
@@ -178,7 +161,6 @@ const BookState = (props) => {
       }
       axios.put(`https://book-e-sell-node-api.vercel.app/api/category`,payload)
       .then((response)=>{
-        console.log(response)
         getCategory(1,10)
       })
     }
@@ -189,7 +171,6 @@ const BookState = (props) => {
       }
       axios.post(`https://book-e-sell-node-api.vercel.app/api/category`,payload)
       .then((response)=>{
-        console.log(response)
         getCategory(1,10)
       })
     }
@@ -197,7 +178,6 @@ const BookState = (props) => {
       setLoading(true)
       axios.delete(`https://book-e-sell-node-api.vercel.app/api/category?id=${categoryId}`)
       .then((response)=>{
-        console.log(response)
         getCategory(1,10)
       })
     }

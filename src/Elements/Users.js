@@ -13,7 +13,7 @@ import theme from '../styles/theme';
 import PaginationUsers from './PaginationUsers';
 
 const Users=()=> {
-    const {getUsers,admin,users} =useContext(bookContext)
+    const {getUsers,admin,users,loading} =useContext(bookContext)
     const navigate = useNavigate();
     useEffect(()=>{
         if(admin){
@@ -26,7 +26,7 @@ const Users=()=> {
     },[])
   return (
     <Box sx={{minHeight: '100vh', width: '90vw', display: 'flex',alignItems: 'center',justifyContent: 'center',flexDirection: 'column'}}>
-      <Typography variant='h2' sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px 0px',padding: '5px', borderRadius: '10px',boxSizing: 'border-box', fontSize: '2.5rem'}}>
+      <Typography variant='h2' sx={{display: loading?'none':'flex', alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%',backgroundColor: theme.palette.secondary.light, textAlign: 'center', margin: '10px 0px',padding: '5px', borderRadius: '10px',boxSizing: 'border-box', fontSize: '2.5rem'}}>
         Users 
       </Typography>
       <TableContainer sx={{"&::-webkit-scrollbar":{display: 'none'}, width: '99%',height: '100%'}} component={Paper}>
