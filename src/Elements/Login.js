@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
     .required('Password is required'),
 });
 export default function Login() {
-  const {setUser,setAdmin } = useContext(bookContext)
+  const {setUser,setAdmin, setSeller } = useContext(bookContext)
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -45,6 +45,8 @@ export default function Login() {
         setUser(response.data.result)
         if(response.data.result.role==='admin')
         setAdmin(response.data.result)
+        if(response.data.result.role==='seller')
+        setSeller(response.data.result)
         
         navigate('/')
         toast.success('Logged In')

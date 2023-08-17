@@ -4,6 +4,7 @@ import axios from 'axios';
 const BookState = (props) => {
     const [user,setUser] = useState("");
     const [admin,setAdmin] = useState("");
+    const [seller,setSeller] = useState("");
     const [users,setUsers] = useState("");
     const [cartItem,setCartItem] = useState(0);
     const [cart,setCart] = useState([]);
@@ -45,7 +46,7 @@ const BookState = (props) => {
       handleClose()
     }
     const getCartData = ()=>{
-      
+
       axios.get(`https://book-e-sell-node-api.vercel.app/api/cart?userId=${user.id}` )
       .then((response)=>{
 
@@ -182,7 +183,7 @@ const BookState = (props) => {
       })
     }
   return (
-    <BookContext.Provider value={{user,books,cartItem,cart,open,quantity,keyword,pageIndex,totalPages,pageSize,admin,users,pageIndexUsers,pageSizeUsers,bookList,totalBookListItems,loading,category,totalCategory, setTotalCategory,setCategory,setLoading,setTotalBookListItems,setBookList,setPageSizeUsers,setPageIndexUsers,setUsers,setAdmin,setPageSize,setTotalPages,setPageIndex,setKeyword,setQuantity, setUser,getBooks,setCartItem,setCart,setOpen,handleOpen,handleClose,makeAddCartReq,setBookId,getCartData,deleteFromCart,placeOrder,getUsers,getBookList,updateBook,addBook,deleteBook,getCategory,updateCategory,addCategory,deleteCategory}}>
+    <BookContext.Provider value={{user,books,cartItem,cart,open,quantity,keyword,pageIndex,totalPages,pageSize,admin,users,pageIndexUsers,pageSizeUsers,bookList,totalBookListItems,loading,category,totalCategory,seller,setSeller, setTotalCategory,setCategory,setLoading,setTotalBookListItems,setBookList,setPageSizeUsers,setPageIndexUsers,setUsers,setAdmin,setPageSize,setTotalPages,setPageIndex,setKeyword,setQuantity, setUser,getBooks,setCartItem,setCart,setOpen,handleOpen,handleClose,makeAddCartReq,setBookId,getCartData,deleteFromCart,placeOrder,getUsers,getBookList,updateBook,addBook,deleteBook,getCategory,updateCategory,addCategory,deleteCategory}}>
         {props.children}
     </BookContext.Provider>
   );

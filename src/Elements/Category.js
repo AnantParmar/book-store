@@ -21,7 +21,7 @@ const style = {
   p: 4,
 };
 const Category=()=> {
-    const {getCategory,admin,totalCategory,loading,category,updateCategory,addCategory} =useContext(bookContext)
+    const {getCategory,admin,totalCategory,loading,category,updateCategory,addCategory,seller} =useContext(bookContext)
     const  [credentials, setCredentials] = useState({
       pageIndex : 1,
       pageSize : 10
@@ -59,7 +59,7 @@ const Category=()=> {
     }
     const navigate = useNavigate();
     useEffect(()=>{
-        if(admin) {
+        if(admin||seller) {
             getCategory(credentials.pageIndex,credentials.pageSize)
         }
         else {

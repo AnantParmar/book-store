@@ -64,7 +64,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const navigate = useNavigate();
-  const {user,setUser,cart,keyword,getBooks,setKeyword,setPageIndex,admin,setAdmin} = useContext(bookContext);
+  const {user,setUser,cart,keyword,getBooks,setKeyword,setPageIndex,admin,setAdmin,seller,setSeller} = useContext(bookContext);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -105,7 +105,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {user?<MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{setUser('');setAdmin('');navigate('/login');handleMenuClose()}}>LogOut</MenuItem>:(
+      {user?<MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{setUser('');setAdmin('');setSeller('');navigate('/login');handleMenuClose()}}>LogOut</MenuItem>:(
       // <>
         <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/login');handleMenuClose()}}>Login</MenuItem>
         // <MenuItem sx={{fontFamily: 'Josefin Sans'}} onClick={()=>{navigate('/signup');handleMenuClose()}}>SignUp</MenuItem>
@@ -225,20 +225,20 @@ export default function Navbar() {
             Users
           </Typography>
           <Typography
-            onMouseDown={()=>{admin?navigate('/booklist'):navigate('/login')}}
+            onMouseDown={()=>{(admin||seller)?navigate('/booklist'):navigate('/login')}}
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: admin?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
+            sx={{ display: (admin||seller)?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
           >
             Books List
           </Typography>
           <Typography
-            onMouseDown={()=>{admin?navigate('/category'):navigate('/login')}}
+            onMouseDown={()=>{(admin||seller)?navigate('/category'):navigate('/login')}}
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: admin?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
+            sx={{ display: (admin||seller)?{ xs: 'block', sm: 'block'}:'none',"&:hover":{backgroundColor: {xs:'gray'}, borderRadius: {xs:'5px'}}, marginRight: {md:"10px"}, cursor: 'pointer', fontFamily: 'Josefin Sans'  , width: {xs: '100%',sm:'fit-content'}, boxSizing: {xs: 'border-box'}, padding: {xs: '5px'} , textAlign: 'center' }}
           >
             Category
           </Typography>

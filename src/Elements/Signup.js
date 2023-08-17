@@ -8,7 +8,7 @@ import theme from '../styles/theme'
 import axios from 'axios';
 import {toast} from 'react-toastify'
 import { ThemeProvider } from '@mui/material/styles';
-import { Box, CssBaseline } from '@mui/material';
+import { Box, CssBaseline, FormLabel,Radio,RadioGroup,FormControlLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -39,6 +39,7 @@ export default function Signup() {
       lastName: '',
       email: '',
       password: '',
+      roleId: 3
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -49,7 +50,7 @@ export default function Signup() {
         lastName: values.lastName,
         email: values.email,
         password: values.password,
-        roleId: parseInt(Math.random()*1000)
+        roleId: values.roleId
       }
       axios.post('https://book-e-sell-node-api.vercel.app/api/user',payload )
       .then((response)=>{
@@ -161,6 +162,19 @@ export default function Signup() {
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
           />
+          <Box sx={{display: 'flex',alignItems: 'center',justifyContent:'flex-start',width: '100%'}}>
+            <FormLabel id="demo-row-radio-buttons-group-label" sx={{marginRight: '20px', color: 'black'}}>Role</FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                onChange={(e)=>{formik.values.roleId = e.target.value}}
+              >
+              <FormControlLabel value={2} control={<Radio />} label="Seller" />
+              <FormControlLabel value={3} control={<Radio />} label="buyer" />
+              
+            </RadioGroup>
+          </Box>
           <Button sx={{marginTop: "20px",position: {xs: 'absolute'},bottom: {xs:'25px',sm : '40px', md: '45px'}, fontFamily: 'Josefin Sans'}} color="secondary" variant="contained" type="submit" >
             Register
           </Button>

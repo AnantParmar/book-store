@@ -21,7 +21,7 @@ const style = {
   p: 4,
 };
 const BookList=()=> {
-    const {getBookList,admin,totalBookListItems,loading,bookList,updateBook,addBook} =useContext(bookContext)
+    const {getBookList,admin,totalBookListItems,loading,bookList,updateBook,addBook,seller} =useContext(bookContext)
     const [photoUrl,setPhotoUrl] = useState("")
     const  [credentials, setCredentials] = useState({
       pageIndex : 1,
@@ -72,7 +72,7 @@ const BookList=()=> {
     }
     const navigate = useNavigate();
     useEffect(()=>{
-        if(admin)
+        if(admin||seller)
         getBookList(credentials.pageIndex,credentials.pageSize)
         else
         navigate("/login")
